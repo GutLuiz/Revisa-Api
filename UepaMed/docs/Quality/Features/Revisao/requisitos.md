@@ -1,53 +1,87 @@
 # Revisão — Requisitos Funcionais
 
-## Visão geral da revisão
+# Requisitos funcionais 
 
-	- Todos os usuários participantes da revisão devem visualizar as informações do cadastro da revisão, como título, domínio, tipo, descrição, data de criação e status.
+# Visão geral e participantes
 
-	- Os indicadores e resultados finais da revisão devem permanecer indisponíveis até o encerramento da votação cega.
+01 - Visualizar dados da revisão
+	= Todos os participantes ativos da revisão devem visualizar suas informações de cadastro: título,
+	domínio, tipo, descrição, data de criação e status
 
-	- Todos os participantes devem visualizar a lista de membros da revisão, incluindo nome, papel e status de participação.
+02 - Visualizar indicadores após votação cega
+	= Os indicadores e resultados finais da revisão devem permanecer indisponíveis até o encerramento da votação cega.
 
-	- A lista de membros deve identificar participantes ativos e participantes que saíram da revisão.
+03 - Visualizar membros da revisão
+	= Todos os participantes ativos devem visualizar a lista de membros da revisão, contendo nome, 
+	papel e status de participação.
 
-	- Somente o Proprietário pode convidar novos membros para a revisão.
+04 - Convidar membros
+	= Somente o Proprietário deve poder convidar novos membros para a revisão.
 
-	- Convites para entrada na revisão podem ser aceitos antes do início ou após o término da votação. Não deve ser permitido aceitar novos membros durante uma votação ativa.
+05 - Status de participação
+	= A lista de membros deve identificar participantes ativos 
 
-	- Revisor, Avaliador e Colaborador podem sair da revisão a qualquer momento. A saída deve alterar seu status na lista de membros, sem apagar suas atividades já registradas.
+06 - Aceite de convite
+	= Convites para participar de uma revisão podem ser aceitos antes do início ou após o término da votação.
+	= Não deve ser permitido aceitar novos membros durante uma votação ativa.
 
-	- Somente o Proprietário pode editar ou excluir a revisão.
+07 - Saída de participante
+	= Revisor, Avaliador e Colaborador podem sair da revisão a qualquer momento.
+	Sem apagar atividades que já tenham sido registradas por ele.
 
-## Analise de dados
+# Análise de artigos e votação cega
 
-	- Usuários com papel Proprietário ou Revisor podem importar arquivos de artigos para a revisão.
+01 - Importar artigos
+	= Usuários com papel Proprietário ou Revisor devem poder importar arquivos de artigos para a revisão.
 
-	- Somente o Proprietário pode resolver artigos duplicados identificados pelo sistema.
+02 - Resolver artigos duplicados
+	= Somente o Proprietário deve poder resolver artigos duplicados identificados pelo sistema.
+	= Artigos duplicados devem voltar para a lista de artigos como excluído
 
-	- Somente o proprietário e revivor podem excluir arquivos que foram incluidos na revisão
+03 - Excluir artigos importados
+	= Usuários com papel Proprietário ou Revisor devem poder excluir arquivos de artigos incluídos na revisão
 
-	- Todos os participantes da revisão podem visualizar os artigos no cabeçalho `Lista de artigos`.
+04 - Visualizar lista de artigos
+	= Todos os participantes ativos devem poder visualizar os artigos da revisão na seção Lista de artigos.
 
-	- Os artigos devem apresentar informações necessárias para o processo de revisão, seguindo como referência o fluxo do Rayyan.
+05 - Visualizar dados de análise
+	= Proprietário, Revisor e Avaliador devem ter acesso às seções Visão geral do progresso, Votação 
+	individual e Artigos em conflito.
 
-	- Os cabeçalhos `Visão geral do progresso`, `Votação individual` e `Artigos em conflito` devem estar disponíveis para Proprietário, Revisor e Avaliador.
+06 - Restringir dados de análise ao Colaborador
+	= Usuários com papel Colaborador não devem visualizar as seções Visão geral do progresso, 
+	Votação individual e Artigos em conflito.
 
-	- Usuários com papel Colaborador não devem visualizar os cabeçalhos `Visão geral do progresso`, `Votação individual` e `Artigos em conflito`.
+07 - Exibir progresso individual
+	= A visão geral do progresso deve apresentar estatísticas individuais de participação de cada membro
 
-	- A visão geral do progresso deve apresentar estatísticas individuais de participação de cada membro.
+08 - Preservar sigilo durante votação cega
+	= Durante a votação cega, a porcentagem individual de participação de cada membro pode ser 
+	exibida, desde que não revele suas decisões de voto.
+	= As decisões individuais de cada participante devem permanecer ocultas para os demais
+	membros durante a votação cega.
 
-	- Durante a votação cega, a porcentagem individual de participação de cada membro pode ser exibida, desde que não revele suas decisões de voto.
+09 -  Encerrar votação automaticamente
+	= Quando todos os participantes ativos e elegíveis concluírem seus votos, a votação deve ser 
+	encerrada automaticamente.
 
-	- Durante a votação cega, as decisões individuais de cada participante devem permanecer ocultas para os demais membros.
+10 - Disponibilizar resultado da votação
+	= Após o encerramento da votação cega, o sistema deve disponibilizar os resultados finais e 
+	identificar os artigos em conflito.
 
-	- Quando todos os participantes ativos e elegíveis concluírem seus votos, a votação deve ser encerrada automaticamente.
+# Planilha de complementação e decisão final
 
-	- Após o encerramento da votação, o sistema deve disponibilizar os resultados finais e identificar os artigos em conflito.
+01 - Adicionar informações complementares
+	= Os participantes ativos devem poder adicionar informações complementares aos artigos incluídos na revisão
 
-## Planilha
-	- Os usuários devem poder adicionar informações complementares aos artigos incluídos.
-	- Os usuários devem realizar uma nova etapa de votação para definir quais artigos farão parte da revisão final.
-	- Os artigos devem ser classificados visualmente por cor:
-	  - Verde: artigo incluído na revisão final.
-	  - Vermelho: artigo excluído após análise complementar.
-	- A classificação por cores e a nova etapa de votação não devem alterar os resultados da votação anterior.
+02 - Realizar votação final
+	= Os participantes ativos devem realizar uma nova etapa de votação para definir quais artigos 
+	farão parte da revisão final.
+
+03 - Classificar artigos visualmente+
+	= Os artigos devem ser classificados visualmente por cor após a análise complementar:
+	Verde: artigo incluído na revisão final.
+    Vermelho: artigo excluído após análise complementar.
+
+04 - Preservar votação anterior
+	= A classificação por cores e a etapa de votação final não devem alterar os resultados da votação anterior
