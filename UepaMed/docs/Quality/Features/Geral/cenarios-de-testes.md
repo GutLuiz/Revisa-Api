@@ -1,43 +1,86 @@
 # Visão Geral - Cenários de Testes
-# CENARIO -> RESULTADO ESPERADO
 
-- Premissas
+- Premissas:
+	= Existem os papéis: Proprietário, Revisor, Avaliador e Colaborador.
+    = Somente o Proprietário pode excluir uma revisão.
+    = Revisor, Avaliador e Colaborador podem sair da revisão a qualquer momento.
+    = Título, domínio e tipo de revisão são obrigatórios.
+    = Descrição é opcional.
+    = todos esses cenários o usuário deve estar autenticado.
 
-Existem os papéis: Proprietário, Revisor, Avaliador e Colaborador.
+- Criar revisão válida:
+	= Título, domínio e tipo de revisão válidos
+	-> A revisão é criada com sucesso
 
-Somente o Proprietário pode excluir uma revisão.
+# Validações da Revisão:
 
-Revisor, Avaliador e Colaborador podem sair da revisão a qualquer momento.
+01 - Validar Títutlo Obrigatório
+	= Título não informado
+	-> A criação é rejeitada com a mensagem "Título não pode ser nulo"
 
-Título, domínio e tipo de revisão são obrigatórios.
+02 - Validar Título somente numérico 
+	= Título composto somente por números
+	-> A criação é rejeitada com a mensagem "Título não pode ser composto somente por números"
 
-Descrição é opcional.
+03 - Validar caracteres especiais no título
+	= Título contendo caracteres especiais não permitidos
+	-> Criação é rejeitada com a mensagem de validação de título.
 
-todos esses cenários o usuário deve estar autenticado:
+04 - Validar tamanho de título 
+	= Título com menos de 10 caracteres 
+	-> A criação é rejeitad com a mensagem de validação para título
 
-- Cadastro da Revisão com sucesso:
-	-> Registrar uma revisão com título, domínio e tipo válidos -> Deve ser criado com sucesso
-- Validações do Registro:
-	-> O Título não pode ser nulo -> mensagem "Título não pode ser nulo" 
-	-> O Título não deve conter somente números -> mensagem "título não pode ser composto
-	com somente números"
-	-> O Título não pode ter caracteres especiais -> mensagem "título não aceita caracteres
-	especiais"
-	-> O Título deve conter pelo menos de 10 caracteres -> mensagem "título no minímo 10 caracteres"
-- Listar Revisões com sucesso:
-	-> O sistema deve retornar a lista de revisões que aquele usuário participa
-	independente do papel.
-- Validações de edição:
-	-> O usuário com papel propietário -> pode editar normalmente a revisão
-	-> O usuário com papel diferente de propietário -> não pode editar a revisão
-- Validações de exclusão:
-	-> O usuário com papel propíetário -> deve excluir toda a revisão
-	-> O usuário com papel diferente do proprietário -> deve somente sair da revisão e 
-	a revisão deve continuar existindo
-- Validação de Autenticação:
-	-> Dado que não exista token válido na requisição
-    Quando o usuário tentar criar, listar, editar, excluir ou sair de uma revisão
-	a API deve negar o acesso.
+05 - Validar limite mínimo aceito do título
+	= Título válido com 10 ou mais caracteres 
+	-> A revisão é criada com sucesso
+
+06 - Validar domínio obrigátorio
+	= Domínio não informado 
+	-> A criacção é rejeitada com erro de campo obrigatório
+
+07 - Validar tipo de revisão obrigatório 
+	= Tipo de revisão não informado
+	-> A criação é rejeitada com erro de campo obrigatório 
+
+08 - Validar descrição opcional
+	= Criar revisão sem descrição
+	-> A revisão é criada com sucesso
+
+# Validações de edição:
+
+01 - Editar revisão como proprietário
+	= Proprietário da revisão altera dados válidos
+	-> A revisão é editada com sucesso
+
+02 - Editar revisão como não proprietário
+	= Revisor, Avaliador ou colaborador tenta editar a revisão 
+	-> A edição é rejeitada
+
+# Validações de Exclusão/saída:
+
+01 - Excluir revisão como proprietário
+	= Proprietário solicita a exclusão da revisão 
+	-> O usuário deixa de participar da revisão, e a revisão continua existindo para os demais participantes
+
+02 - Sair da revisão como participante
+	= Revisor, Avaliador ou colaborador solicita saída da revisão
+	-> O usuário deixa de participar da revisão, e a revisão continua existindo para os demais participantes
+
+03 - Impedir exclusão por não proprietário 
+	= Revisor, Avaliador ou colaborador tenta excluir a revisão
+	-> A exclusão é rejeitada e a revisão continua existindo
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 	
