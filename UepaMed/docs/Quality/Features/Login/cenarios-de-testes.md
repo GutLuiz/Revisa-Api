@@ -22,7 +22,7 @@
 	= Email cadastrado enviado com letras maiúsculas ou minúsculas diferentes e senha correta
 	-> O login é concluído com sucesso
 
-# Validações do Nome:
+# Validações do Senha:
 
 01 - Válidar ausência de senha
 	= email cadastrado e senha não informada
