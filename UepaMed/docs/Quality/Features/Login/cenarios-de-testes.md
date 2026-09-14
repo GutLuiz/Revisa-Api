@@ -1,5 +1,75 @@
 # Login de usuário - Cenários de teste 
-# CENARIO -> RESULTADO ESPERADO
+
+- Realizar login válido:
+	= email cadastrado e senha correta 
+	-> O login é concluído com sucesso e a resposta contém apenas informações não sensíveis do usuário
+
+# Validações do Email:
+
+01 - Válidar ausência do email
+	= Email não informado 
+	-> O login é rejeitado conforme o contrato de erro da API
+
+02 - Válidar formato do email 
+	= Email em formato inválido 
+	-> O login é rejeitado conforme o contrato de erro da API
+
+03 - Válidar email não cadastrado 
+	= Email válido, mas não cadastrado, e qualquer senha
+	-> O login é rejeitado com a mensagem Email ou senha inválidos.
+
+04 - Válidar login sem diferenciar maiúsculas e minúsculas
+	= Email cadastrado enviado com letras maiúsculas ou minúsculas diferentes e senha correta
+	-> O login é concluído com sucesso
+
+# Validações do Nome:
+
+01 - Válidar ausência de senha
+	= email cadastrado e senha não informada
+	-> O login é rejeitado conforme o contrato de erro da API
+
+02 - Válidar senha incorreta 
+	= email cadastrado e senha incorreta
+	-> O login é rejeitado com a mensagem email ou senha inválidos
+
+# Validações de Segurança:
+
+01 - Validar ausência de sessão após falha
+	= Tentativa de login malsucedida
+	-> Nenhum cookie ou token de autenticação é criado
+
+02 - Validar envio de cookies no login
+	= Realizar login com credenciais válidas
+	-> A resposta contém os cookies de autenticação no cabeçalho Set-Cookie.
+
+03 - Validar acesso protegido com sessão válida
+	= Utilizar cookie de autenticação válido em endpoint protegido
+	-> O acesso ao endpoint é autorizado.
+
+04 - Validar sessão expirada
+	= Utilizar cookie de autenticação após sua expiração
+	-> O acesso ao endpoint protegido é rejeitado.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 - Login realizado com sucesso:
 	-> Informar e-mail e senha de um usuário cadastrado → Login concluído, mensagem de sucesso e 
