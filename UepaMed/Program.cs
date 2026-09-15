@@ -25,7 +25,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(
-        builder.Configuration.GetConnectionString("DefaultConnection")
+        builder.Configuration.GetConnectionString("DefaultConnection"),
+        npgsqlOptions => npgsqlOptions.EnableRetryOnFailure()
     )
 );
 
@@ -71,16 +72,26 @@ builder.Services.AddScoped<DuplicidadeService>();
 builder.Services.AddScoped<IPlanilhaRepository, PlanilhaRepository>();
 builder.Services.AddScoped<PlanilhaService>();
 
+var frontendOrigin = builder.Configuration["Frontend:Origin"];
+
+var allowedOrigins = new List<string>
+{
+    "http://localhost:3000",
+    "http://localhost:3001",
+    "https://localhost:3000"
+};
+
+if (!string.IsNullOrWhiteSpace(frontendOrigin))
+{
+    allowedOrigins.Add(frontendOrigin);
+}
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("Frontend", policy =>
     {
         policy
-            .WithOrigins(
-                "http://localhost:3000",
-                "http://localhost:3001",
-                "https://localhost:3000"
-            )
+            .WithOrigins(allowedOrigins.ToArray())
             .AllowAnyMethod()
             .AllowAnyHeader()
             .AllowCredentials();
@@ -155,6 +166,12 @@ builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    await db.Database.MigrateAsync();
+}
+
 app.UseExceptionHandler(errorApp =>
 {
     errorApp.Run(async context =>
@@ -204,5 +221,9 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapGet("/health", () =>
+    Results.Ok(new { status = "ok" })
+);
 
 app.Run();
