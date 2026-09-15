@@ -1,6 +1,7 @@
 ﻿using UepaMed.Domain.Entities.Arquivos;
 using UepaMed.Domain.Entities.Revisoes;
 using UepaMed.Domain.Enums;
+using UepaMed.Domain.Enums.Artigos;
 
 namespace UepaMed.Domain.Entities.Artigos
 {
@@ -26,10 +27,24 @@ namespace UepaMed.Domain.Entities.Artigos
 
         public string? PMID { get; set; }
 
+        public string? TipoPublicacao { get; set; }
+
+        public string? Paginas { get; set; }
+
+        public string? Volume { get; set; }
+
+        public string? Numero { get; set; }
+
+        public string? Url { get; set; }
+
+        public string? Idioma { get; set; }
+
         public Revisao Revisao { get; set; } = null!;
 
         public ArquivoImportacao ArquivoImportacao { get; set; } = null!;
 
         public StatusArtigo Status { get; set; } = StatusArtigo.Pendente;
+
+        public MotivoExclusaoArtigo? MotivoExclusao { get; set; }
     }
 }

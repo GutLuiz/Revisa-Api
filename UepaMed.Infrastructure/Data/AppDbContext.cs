@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using UepaMed.Domain.Entities.Arquivos;
 using UepaMed.Domain.Entities.Artigos;
+using UepaMed.Domain.Entities.Planilhas;
 using UepaMed.Domain.Entities.Revisoes;
 using UepaMed.Domain.Entities.Usuarios;
 using UepaMed.Domain.Entities.Votacoes;
@@ -25,6 +26,11 @@ namespace UepaMed.Infrastructure.Data
         public DbSet<ConflitoVotacao> ConflitosVotacao { get; set; }
         public DbSet<VotacaoParticipante> VotacaoParticipantes { get; set; }
         public DbSet<VotacaoArtigo> VotacaoArtigos { get; set; }
+
+        public DbSet<PlanilhaRevisao> PlanilhasRevisao { get; set; }
+        public DbSet<PlanilhaColuna> PlanilhasColuna { get; set; }
+        public DbSet<PlanilhaLinha> PlanilhasLinha { get; set; }
+        public DbSet<PlanilhaCelula> PlanilhasCelula { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -205,6 +211,86 @@ namespace UepaMed.Infrastructure.Data
                     .WithMany()
                     .HasForeignKey(c => c.ArtigoId)
                     .OnDelete(DeleteBehavior.Restrict);
+            });
+            modelBuilder.Entity<PlanilhaRevisao>(entity =>
+            {
+                entity.HasKey(planilha => planilha.Id);
+
+                entity.HasIndex(planilha => planilha.RevisaoId)
+                    .IsUnique();
+
+                entity.HasOne(planilha => planilha.Revisao)
+                    .WithMany()
+                    .HasForeignKey(planilha => planilha.RevisaoId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasMany(planilha => planilha.Colunas)
+                    .WithOne(coluna => coluna.Planilha)
+                    .HasForeignKey(coluna => coluna.PlanilhaRevisaoId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasMany(planilha => planilha.Linhas)
+                    .WithOne(linha => linha.Planilha)
+                    .HasForeignKey(linha => linha.PlanilhaRevisaoId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<PlanilhaColuna>(entity =>
+            {
+                entity.HasKey(coluna => coluna.Id);
+
+                entity.Property(coluna => coluna.Nome)
+                    .HasMaxLength(150)
+                    .IsRequired();
+
+                entity.Property(coluna => coluna.Tipo)
+                    .HasConversion<int>()
+                    .IsRequired();
+
+                entity.Property(coluna => coluna.CampoArtigoOrigem)
+                    .HasConversion<int?>();
+
+                entity.HasIndex(coluna => new
+                {
+                    coluna.PlanilhaRevisaoId,
+                    coluna.Ordem
+                })
+                .IsUnique();
+            });
+
+            modelBuilder.Entity<PlanilhaLinha>(entity =>
+            {
+                entity.HasKey(linha => linha.Id);
+
+                entity.HasOne(linha => linha.Artigo)
+                    .WithMany()
+                    .HasForeignKey(linha => linha.ArtigoId)
+                    .OnDelete(DeleteBehavior.SetNull);
+            });
+
+            modelBuilder.Entity<PlanilhaCelula>(entity =>
+            {
+                entity.HasKey(celula => celula.Id);
+
+                entity.Property(celula => celula.Valor)
+                    .HasMaxLength(8000);
+
+                entity.HasIndex(celula => new
+                {
+                    celula.PlanilhaLinhaId,
+                    celula.PlanilhaColunaId
+                })
+                .IsUnique();
+
+                entity.HasOne(celula => celula.Linha)
+                    .WithMany(linha => linha.Celulas)
+                    .HasForeignKey(celula => celula.PlanilhaLinhaId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(celula => celula.Coluna)
+                    .WithMany(coluna => coluna.Celulas)
+                    .HasForeignKey(celula => celula.PlanilhaColunaId)
+                    .OnDelete(DeleteBehavior.Cascade);
             });
         }
     }

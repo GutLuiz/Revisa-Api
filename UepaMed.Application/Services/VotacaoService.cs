@@ -94,8 +94,10 @@ namespace UepaMed.Application.Services
                     "Esta revisão já possui uma votação ativa.");
             }
 
-            var artigos = await _artigoRepository
-            .ObterPorRevisaoAsync(dto.RevisaoId);
+            var artigos = (await _artigoRepository
+        .ObterPorRevisaoAsync(dto.RevisaoId))
+        .Where(artigo => artigo.Status == StatusArtigo.Pendente)
+        .ToList();
 
             if (artigos.Count == 0)
             {

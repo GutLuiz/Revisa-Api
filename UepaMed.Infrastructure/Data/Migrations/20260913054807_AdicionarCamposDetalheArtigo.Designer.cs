@@ -2,18 +2,21 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using UepaMed.Infrastructure.Data;
 
 #nullable disable
 
-namespace UepaMed.Infrastructure.Migrations
+namespace UepaMed.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260913054807_AdicionarCamposDetalheArtigo")]
+    partial class AdicionarCamposDetalheArtigo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -185,121 +188,6 @@ namespace UepaMed.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("DuplicidadesIgnoradas");
-                });
-
-            modelBuilder.Entity("UepaMed.Domain.Entities.Planilhas.PlanilhaCelula", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("PlanilhaColunaId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("PlanilhaLinhaId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Valor")
-                        .HasMaxLength(8000)
-                        .HasColumnType("character varying(8000)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PlanilhaColunaId");
-
-                    b.HasIndex("PlanilhaLinhaId", "PlanilhaColunaId")
-                        .IsUnique();
-
-                    b.ToTable("PlanilhasCelula");
-                });
-
-            modelBuilder.Entity("UepaMed.Domain.Entities.Planilhas.PlanilhaColuna", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("CampoArtigoOrigem")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Nome")
-                        .IsRequired()
-                        .HasMaxLength(150)
-                        .HasColumnType("character varying(150)");
-
-                    b.Property<int>("Ordem")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("PlanilhaRevisaoId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("Tipo")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PlanilhaRevisaoId", "Ordem")
-                        .IsUnique();
-
-                    b.ToTable("PlanilhasColuna");
-                });
-
-            modelBuilder.Entity("UepaMed.Domain.Entities.Planilhas.PlanilhaLinha", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int?>("ArtigoId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("Ordem")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("PlanilhaRevisaoId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ArtigoId");
-
-                    b.HasIndex("PlanilhaRevisaoId");
-
-                    b.ToTable("PlanilhasLinha");
-                });
-
-            modelBuilder.Entity("UepaMed.Domain.Entities.Planilhas.PlanilhaRevisao", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime?>("DataAtualizacao")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("RevisaoId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RevisaoId")
-                        .IsUnique();
-
-                    b.ToTable("PlanilhasRevisao");
                 });
 
             modelBuilder.Entity("UepaMed.Domain.Entities.Revisoes.Revisao", b =>
@@ -615,65 +503,6 @@ namespace UepaMed.Infrastructure.Migrations
                     b.Navigation("UsuarioConvidado");
                 });
 
-            modelBuilder.Entity("UepaMed.Domain.Entities.Planilhas.PlanilhaCelula", b =>
-                {
-                    b.HasOne("UepaMed.Domain.Entities.Planilhas.PlanilhaColuna", "Coluna")
-                        .WithMany("Celulas")
-                        .HasForeignKey("PlanilhaColunaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("UepaMed.Domain.Entities.Planilhas.PlanilhaLinha", "Linha")
-                        .WithMany("Celulas")
-                        .HasForeignKey("PlanilhaLinhaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Coluna");
-
-                    b.Navigation("Linha");
-                });
-
-            modelBuilder.Entity("UepaMed.Domain.Entities.Planilhas.PlanilhaColuna", b =>
-                {
-                    b.HasOne("UepaMed.Domain.Entities.Planilhas.PlanilhaRevisao", "Planilha")
-                        .WithMany("Colunas")
-                        .HasForeignKey("PlanilhaRevisaoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Planilha");
-                });
-
-            modelBuilder.Entity("UepaMed.Domain.Entities.Planilhas.PlanilhaLinha", b =>
-                {
-                    b.HasOne("UepaMed.Domain.Entities.Artigos.Artigo", "Artigo")
-                        .WithMany()
-                        .HasForeignKey("ArtigoId")
-                        .OnDelete(DeleteBehavior.SetNull);
-
-                    b.HasOne("UepaMed.Domain.Entities.Planilhas.PlanilhaRevisao", "Planilha")
-                        .WithMany("Linhas")
-                        .HasForeignKey("PlanilhaRevisaoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Artigo");
-
-                    b.Navigation("Planilha");
-                });
-
-            modelBuilder.Entity("UepaMed.Domain.Entities.Planilhas.PlanilhaRevisao", b =>
-                {
-                    b.HasOne("UepaMed.Domain.Entities.Revisoes.Revisao", "Revisao")
-                        .WithMany()
-                        .HasForeignKey("RevisaoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Revisao");
-                });
-
             modelBuilder.Entity("UepaMed.Domain.Entities.Revisoes.Revisao", b =>
                 {
                     b.HasOne("UepaMed.Domain.Entities.Usuarios.Usuario", "Usuario")
@@ -790,23 +619,6 @@ namespace UepaMed.Infrastructure.Migrations
             modelBuilder.Entity("UepaMed.Domain.Entities.Arquivos.ArquivoImportacao", b =>
                 {
                     b.Navigation("Artigos");
-                });
-
-            modelBuilder.Entity("UepaMed.Domain.Entities.Planilhas.PlanilhaColuna", b =>
-                {
-                    b.Navigation("Celulas");
-                });
-
-            modelBuilder.Entity("UepaMed.Domain.Entities.Planilhas.PlanilhaLinha", b =>
-                {
-                    b.Navigation("Celulas");
-                });
-
-            modelBuilder.Entity("UepaMed.Domain.Entities.Planilhas.PlanilhaRevisao", b =>
-                {
-                    b.Navigation("Colunas");
-
-                    b.Navigation("Linhas");
                 });
 
             modelBuilder.Entity("UepaMed.Domain.Entities.Votacoes.Votacao", b =>

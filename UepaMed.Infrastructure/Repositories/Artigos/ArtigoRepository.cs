@@ -4,6 +4,7 @@ using UepaMed.Application.Dtos.Revisoes;
 using UepaMed.Application.Interfaces.Artigos;
 using UepaMed.Domain.Entities.Artigos;
 using UepaMed.Domain.Enums;
+using UepaMed.Domain.Enums.Artigos;
 using UepaMed.Infrastructure.Data;
 
 namespace UepaMed.Infrastructure.Repositories.Artigos
@@ -49,6 +50,11 @@ namespace UepaMed.Infrastructure.Repositories.Artigos
                 throw new KeyNotFoundException("Artigo não encontrado.");
 
             artigo.Status = status;
+
+            if (status != StatusArtigo.Excluido)
+            {
+                artigo.MotivoExclusao = null;
+            }
 
             await _context.SaveChangesAsync();
         }
@@ -112,9 +118,43 @@ namespace UepaMed.Infrastructure.Repositories.Artigos
 
                 ArtigosExcluidos = await artigos.CountAsync(a =>
                     a.Status == StatusArtigo.Excluido),
+                ArtigosDuplicados = await artigos.CountAsync(a =>
+                    a.Status == StatusArtigo.Excluido &&
+                    a.MotivoExclusao == MotivoExclusaoArtigo.Duplicidade),
 
                 ConflitosIdentificados = conflitosIdentificados
             };
+        }
+        public async Task ExcluirComoDuplicadoAsync(
+        int revisaoId,
+        int artigoDuplicadoId,
+        int artigoMantidoId)
+        {
+            var artigos = await _context.Artigos
+                .Where(a =>
+                    a.RevisaoId == revisaoId &&
+                    (a.Id == artigoDuplicadoId ||
+                     a.Id == artigoMantidoId))
+                .ToListAsync();
+
+            var artigoDuplicado = artigos.SingleOrDefault(a =>
+                a.Id == artigoDuplicadoId);
+
+            var artigoMantido = artigos.SingleOrDefault(a =>
+                a.Id == artigoMantidoId);
+
+            if (artigoDuplicado is null || artigoMantido is null)
+            {
+                throw new KeyNotFoundException(
+                    "Os artigos não pertencem a esta revisão.");
+            }
+
+            artigoDuplicado.Status = StatusArtigo.Excluido;
+
+            artigoDuplicado.MotivoExclusao =
+                MotivoExclusaoArtigo.Duplicidade;
+
+            await _context.SaveChangesAsync();
         }
     }
 }

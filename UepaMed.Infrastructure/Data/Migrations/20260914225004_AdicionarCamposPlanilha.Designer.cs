@@ -2,18 +2,21 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using UepaMed.Infrastructure.Data;
 
 #nullable disable
 
-namespace UepaMed.Infrastructure.Migrations
+namespace UepaMed.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260914225004_AdicionarCamposPlanilha")]
+    partial class AdicionarCamposPlanilha
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -650,7 +653,7 @@ namespace UepaMed.Infrastructure.Migrations
                     b.HasOne("UepaMed.Domain.Entities.Artigos.Artigo", "Artigo")
                         .WithMany()
                         .HasForeignKey("ArtigoId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("UepaMed.Domain.Entities.Planilhas.PlanilhaRevisao", "Planilha")
                         .WithMany("Linhas")

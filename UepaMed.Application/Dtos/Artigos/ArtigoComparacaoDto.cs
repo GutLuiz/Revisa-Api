@@ -19,5 +19,15 @@
         public string? DOI { get; set; }
 
         public string? PMID { get; set; }
+
+        public string? Paginas { get; set; }
+
+        public string? TipoPublicacao { get; set; }
+
+        public string? Volume { get; set; }
+
+        public string? Numero { get; set; }
+
+        public string? Url { get; set; }
     }
 }

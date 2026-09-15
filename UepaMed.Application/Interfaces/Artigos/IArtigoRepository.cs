@@ -21,5 +21,9 @@ namespace UepaMed.Application.Interfaces.Artigos
 
         Task<ResumoDadosRevisaoDto> ObterResumoDadosPorRevisaoAsync(
             int revisaoId);
+        Task ExcluirComoDuplicadoAsync(
+        int revisaoId,
+        int artigoDuplicadoId,
+        int artigoMantidoId);
     }
 }

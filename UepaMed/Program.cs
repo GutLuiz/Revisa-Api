@@ -7,6 +7,7 @@ using System.Text.Json.Serialization;
 using UepaMed.Application.Interfaces.Arquivos;
 using UepaMed.Application.Interfaces.Artigos;
 using UepaMed.Application.Interfaces.Convites;
+using UepaMed.Application.Interfaces.Planilhas;
 using UepaMed.Application.Interfaces.Revisoes;
 using UepaMed.Application.Interfaces.Usuarios;
 using UepaMed.Application.Interfaces.Votacoes;
@@ -15,6 +16,7 @@ using UepaMed.Infrastructure.Data;
 using UepaMed.Infrastructure.Importers;
 using UepaMed.Infrastructure.Repositories.Arquivos;
 using UepaMed.Infrastructure.Repositories.Artigos;
+using UepaMed.Infrastructure.Repositories.Planilhas;
 using UepaMed.Infrastructure.Repositories.Revisoes;
 using UepaMed.Infrastructure.Repositories.Usuarios;
 using UepaMed.Infrastructure.Repositories.Votacoes;
@@ -65,6 +67,9 @@ builder.Services.AddScoped<
 >();
 
 builder.Services.AddScoped<DuplicidadeService>();
+
+builder.Services.AddScoped<IPlanilhaRepository, PlanilhaRepository>();
+builder.Services.AddScoped<PlanilhaService>();
 
 builder.Services.AddCors(options =>
 {

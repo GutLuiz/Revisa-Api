@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using UepaMed.Application.Dtos.Artigos;
 using UepaMed.Application.Services;
 
 namespace UepaMed.Api.Controllers
@@ -40,6 +41,15 @@ namespace UepaMed.Api.Controllers
                     r => r.PercentualSimilaridade >= 50 &&
                          r.PercentualSimilaridade < 70)
             });
+        }
+        [HttpPost("decisoes")]
+        public async Task<IActionResult> DecidirDuplicidade(
+        int revisaoId,
+        [FromBody] DecidirDuplicidadeDto dto)
+        {
+            await _duplicidadeService.DecidirAsync(revisaoId, dto);
+
+            return NoContent();
         }
     }
 }
