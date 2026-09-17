@@ -15,5 +15,6 @@ namespace UepaMed.Application.Dtos.Votacoes
         public OpcaoVoto Opcao { get; set; }
 
         public DateTime DataRegistro { get; set; }
+        public int? ResponsavelConflitosUsuarioId { get; set; }
     }
 }

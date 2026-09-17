@@ -65,11 +65,13 @@ namespace UepaMed.Application.Services
             var temAvaliador = membros.Any(membro =>
                 membro.Papel == PapelMembroRevisao.Avaliador);
 
-            if (temRevisor && !temAvaliador)
-            {
-                throw new InvalidOperationException(
-                    "Não é possível iniciar a votação com revisor sem um avaliador na revisão.");
-            }
+           
+
+            //if (temRevisor && !temAvaliador)
+            //{
+            //    throw new InvalidOperationException(
+            //        "Não é possível iniciar a votação com revisor sem um avaliador na revisão.");
+            //}
 
             if (temAvaliador && !temRevisor)
             {
@@ -77,12 +79,33 @@ namespace UepaMed.Application.Services
                     "Não é possível iniciar a votação com avaliador sem um revisor na revisão.");
             }
 
-            if (dto.RevisaoId <= 0)
+            // Só é exigido quando há revisor, mas não há avaliador.
+            if (temRevisor && !temAvaliador)
             {
-                throw new ArgumentException(
-                    "O identificador da revisão é inválido.",
-                    nameof(dto.RevisaoId));
+                if (!dto.ResponsavelConflitosUsuarioId.HasValue)
+                {
+                    throw new InvalidOperationException(
+                        "Selecione um responsável por registrar os conflitos da votação.");
+                }
+
+                var responsavel = membros.FirstOrDefault(membro =>
+                    membro.UsuarioId == dto.ResponsavelConflitosUsuarioId.Value &&
+                    (membro.Papel == PapelMembroRevisao.Proprietario ||
+                     membro.Papel == PapelMembroRevisao.Revisor));
+
+                if (responsavel is null)
+                {
+                    throw new InvalidOperationException(
+                        "O responsável pelos conflitos deve ser proprietário ou revisor desta revisão.");
+                }
             }
+
+            //if (dto.RevisaoId <= 0)
+            //{
+            //    throw new ArgumentException(
+            //        "O identificador da revisão é inválido.",
+            //        nameof(dto.RevisaoId));
+            //}
 
             var votacaoAtiva = await _votacaoRepository
                 .ObterAtivaPorRevisaoAsync(
@@ -119,6 +142,11 @@ namespace UepaMed.Application.Services
                 votacao.AdicionarArtigo(artigo.Id);
             }
 
+            if (temRevisor && !temAvaliador)
+            {
+                votacao.DefinirResponsavelConflitos(
+                    dto.ResponsavelConflitosUsuarioId!.Value);
+            }
 
             votacao.Iniciar();
 
@@ -386,11 +414,23 @@ namespace UepaMed.Application.Services
                     votacao.RevisaoId,
                     usuarioId);
 
-            if (membro?.Papel != PapelMembroRevisao.Avaliador)
+            var ehAvaliador =
+             membro?.Papel == PapelMembroRevisao.Avaliador;
+
+            var ehResponsavelAlternativo =
+                votacao.ResponsavelConflitosUsuarioId == usuarioId;
+
+            if (!ehAvaliador && !ehResponsavelAlternativo)
             {
                 throw new UnauthorizedAccessException(
-                    "Apenas o avaliador pode visualizar os conflitos da votação.");
+                    "Apenas o avaliador ou o responsável definido para a votação podem atuar nos conflitos.");
             }
+
+            //if (membro?.Papel != PapelMembroRevisao.Avaliador)
+            //{
+            //    throw new UnauthorizedAccessException(
+            //        "Apenas o avaliador pode visualizar os conflitos da votação.");
+            //}
 
             return votacao.Conflitos
                 .OrderBy(conflito => conflito.DataCriacao)
@@ -409,20 +449,7 @@ namespace UepaMed.Application.Services
                 .ToList();
         }
 
-        private static VotacaoRespostaDto
-            MapearVotacao(
-                Votacao votacao)
-        {
-            return new VotacaoRespostaDto
-            {
-                Id = votacao.Id,
-                RevisaoId = votacao.RevisaoId,
-                Status = votacao.Status,
-                DataInicio = votacao.DataInicio,
-                DataFinalizacao =
-                    votacao.DataFinalizacao
-            };
-        }
+        
         public async Task<List<ArtigoConflitoRespostaDto>>
          ListarArtigosEmConflitoAsync(int votacaoId)
         {
@@ -450,11 +477,23 @@ namespace UepaMed.Application.Services
                     votacao.RevisaoId,
                     usuarioId);
 
-            if (membro?.Papel != PapelMembroRevisao.Avaliador)
+            var ehAvaliador =
+            membro?.Papel == PapelMembroRevisao.Avaliador;
+
+            var ehResponsavelAlternativo =
+                votacao.ResponsavelConflitosUsuarioId == usuarioId;
+
+            if (!ehAvaliador && !ehResponsavelAlternativo)
             {
                 throw new UnauthorizedAccessException(
-                    "Apenas o avaliador pode visualizar os artigos em conflito.");
+                    "Apenas o avaliador ou o responsável definido para a votação podem atuar nos conflitos.");
             }
+
+            //if (membro?.Papel != PapelMembroRevisao.Avaliador)
+            //{
+            //    throw new UnauthorizedAccessException(
+            //        "Apenas o avaliador pode visualizar os artigos em conflito.");
+            //}
 
             return votacao.Conflitos
                 .Where(conflito => !conflito.Resolvido)
@@ -542,11 +581,23 @@ namespace UepaMed.Application.Services
                     votacao.RevisaoId,
                     usuarioId);
 
-            if (membro?.Papel != PapelMembroRevisao.Avaliador)
+            var ehAvaliador =
+            membro?.Papel == PapelMembroRevisao.Avaliador;
+
+            var ehResponsavelAlternativo =
+                votacao.ResponsavelConflitosUsuarioId == usuarioId;
+
+            if (!ehAvaliador && !ehResponsavelAlternativo)
             {
                 throw new UnauthorizedAccessException(
-                    "Apenas o avaliador pode resolver conflitos.");
+                    "Apenas o avaliador ou o responsável definido para a votação podem atuar nos conflitos.");
             }
+
+            //if (membro?.Papel != PapelMembroRevisao.Avaliador)
+            //{
+            //    throw new UnauthorizedAccessException(
+            //        "Apenas o avaliador pode resolver conflitos.");
+            //}
 
             var conflito = votacao.Conflitos
                 .FirstOrDefault(c => c.Id == conflitoId);
@@ -605,6 +656,20 @@ namespace UepaMed.Application.Services
                 UsuarioId = voto.UsuarioId,
                 Opcao = voto.Opcao,
                 DataRegistro = voto.DataRegistro
+            };
+        }
+        private static VotacaoRespostaDto MapearVotacao(
+        Votacao votacao)
+        {
+            return new VotacaoRespostaDto
+            {
+                Id = votacao.Id,
+                RevisaoId = votacao.RevisaoId,
+                Status = votacao.Status,
+                DataInicio = votacao.DataInicio,
+                DataFinalizacao = votacao.DataFinalizacao,
+                ResponsavelConflitosUsuarioId =
+            votacao.ResponsavelConflitosUsuarioId
             };
         }
         private async Task ApurarVotacaoSeTodosVotaram(

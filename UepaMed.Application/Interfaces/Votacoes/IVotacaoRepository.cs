@@ -1,4 +1,5 @@
-﻿using UepaMed.Domain.Entities.Votacoes;
+﻿using UepaMed.Application.Dtos.Votacoes;
+using UepaMed.Domain.Entities.Votacoes;
 
 namespace UepaMed.Application.Interfaces.Votacoes
 {
@@ -12,5 +13,7 @@ namespace UepaMed.Application.Interfaces.Votacoes
             int revisaoId);
 
         Task AtualizarAsync(Votacao votacao);
+
+   
     }
 }

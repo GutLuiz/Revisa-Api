@@ -292,5 +292,31 @@ namespace UepaMed.Domain.Entities.Votacoes
 
             Artigos.Add(new VotacaoArtigo(artigoId));
         }
+
+        public int? ResponsavelConflitosUsuarioId { get; private set; }
+
+        public void DefinirResponsavelConflitos(int usuarioId)
+        {
+            if (Status != StatusVotacao.NaoIniciada)
+            {
+                throw new InvalidOperationException(
+                    "Não é possível definir o responsável após iniciar a votação.");
+            }
+
+            var participante = Participantes.FirstOrDefault(participante =>
+                participante.UsuarioId == usuarioId);
+
+            var podeSerResponsavel = participante is not null &&
+                (participante.Papel == PapelMembroRevisao.Proprietario ||
+                 participante.Papel == PapelMembroRevisao.Revisor);
+
+            if (!podeSerResponsavel)
+            {
+                throw new InvalidOperationException(
+                    "O responsável pelos conflitos deve ser proprietário ou revisor da votação.");
+            }
+
+            ResponsavelConflitosUsuarioId = usuarioId;
+        }
     }
 }

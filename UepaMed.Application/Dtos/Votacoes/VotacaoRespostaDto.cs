@@ -13,5 +13,8 @@ namespace UepaMed.Application.Dtos.Votacoes
         public DateTime? DataInicio { get; set; }
 
         public DateTime? DataFinalizacao { get; set; }
+
+        public int? ResponsavelConflitosUsuarioId { get; set; }
+
     }
 }
