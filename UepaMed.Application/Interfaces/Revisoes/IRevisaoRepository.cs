@@ -15,6 +15,5 @@ namespace UepaMed.Application.Interfaces.Revisoes
 
         Task SalvarAsync();
 
-        
     }
 }

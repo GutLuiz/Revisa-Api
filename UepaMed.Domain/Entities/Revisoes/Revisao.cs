@@ -19,6 +19,8 @@ namespace UepaMed.Domain.Entities.Revisoes
 
         public DateTime DataCriacao { get; set; }
 
+        public string? CriteriosVotacao { get; set; }
+
         public DateTime? DataAtualizacao { get; set; }
     }
 }

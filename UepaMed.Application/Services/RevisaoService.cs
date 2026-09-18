@@ -92,6 +92,7 @@ namespace UepaMed.Application.Services
                 Dominio = m.Revisao.Dominio,
                 Descricao = m.Revisao.Descricao,
                 DataCriacao = m.Revisao.DataCriacao,
+                CriteriosVotacao = m.Revisao.CriteriosVotacao,
 
                 Papel = m.Papel
             }).ToList();
@@ -286,6 +287,44 @@ namespace UepaMed.Application.Services
             return await _artigoRepository
                 .ObterResumoDadosPorRevisaoAsync(revisaoId);
         }
+
+        public async Task AtualizarCriteriosVotacaoAsync(
+        int revisaoId,
+        string criteriosVotacao)
+        {
+            var usuarioIdClaim = _httpContextAccessor.HttpContext?
+                .User
+                .FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (!int.TryParse(usuarioIdClaim, out var usuarioId))
+            {
+                throw new UnauthorizedAccessException(
+                    "Usuário não autenticado.");
+            }
+
+            if (string.IsNullOrWhiteSpace(criteriosVotacao))
+            {
+                throw new ArgumentException(
+                    "Os critérios da votação são obrigatórios.");
+            }
+
+            var revisao = await _revisaoRepository
+                .BuscarPorIdEUsuarioAsync(revisaoId, usuarioId);
+
+            if (revisao is null)
+            {
+                throw new UnauthorizedAccessException(
+                    "Somente o proprietário pode alterar os critérios da revisão.");
+            }
+
+            revisao.CriteriosVotacao = criteriosVotacao.Trim();
+            revisao.DataAtualizacao = DateTime.UtcNow;
+
+            await _revisaoRepository.SalvarAsync();
+        }
+
+
+
 
         private static void ValidarTitulo(string? titulo)
         {

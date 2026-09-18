@@ -20,6 +20,7 @@ namespace UepaMed.Application.Dtos.Revisao
         public string? Descricao { get; set; }
         public DateTime DataCriacao { get; set; }
         public PapelMembroRevisao Papel { get; set; }
+        public string? CriteriosVotacao { get; set; }
     }
 
     public class AtualizarRevisaoDto

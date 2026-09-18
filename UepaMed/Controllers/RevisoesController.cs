@@ -155,5 +155,17 @@ namespace UepaMed.Controllers
                 return NotFound(new { mensagem = ex.Message });
             }
         }
+
+        [HttpPut("{revisaoId:int}/criterios-votacao")]
+        public async Task<IActionResult> AtualizarCriteriosVotacao(
+        int revisaoId,
+        AtualizarCriteriosVotacaoDto dto)
+        {
+            await _revisaoService.AtualizarCriteriosVotacaoAsync(
+                revisaoId,
+                dto.CriteriosVotacao);
+
+            return NoContent();
+        }
     }
 }
