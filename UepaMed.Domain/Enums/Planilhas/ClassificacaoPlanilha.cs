@@ -3,7 +3,7 @@
     public enum ClassificacaoPlanilha
     {
         Pendente = 1,
-        Verde = 2,
-        Vermelho = 3
+        Incluido = 2,
+        Excluido = 3
     }
 }
