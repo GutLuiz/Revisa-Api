@@ -12,6 +12,7 @@ namespace UepaMed.Application.Dtos.importacao
         public int QuantidadeIncluidos { get; set; }
         public int QuantidadePendentes { get; set; }
         public int QuantidadeExcluidos { get; set; }
+        public OrigemImportacao Origem { get; set; }
     }
 
     public class ContagemStatusArquivoDto

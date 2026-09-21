@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UepaMed.Application.Services;
+using System.Security.Claims;
 using UepaMed.Domain.Entities.Usuarios;
 
 namespace UepaMed.Controllers
@@ -83,6 +84,32 @@ namespace UepaMed.Controllers
             {
                 mensagem =
                     "Arquivo e artigos relacionados removidos com sucesso."
+            });
+        }
+
+        [HttpPost("biblioteca/{importacaoBibliotecaId:int}")]
+        public async Task<IActionResult> ImportarDaBiblioteca(
+        int revisaoId,
+        int importacaoBibliotecaId)
+        {
+            var usuarioIdClaim = User
+                .FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+            if (!int.TryParse(usuarioIdClaim, out var usuarioId))
+            {
+                return Unauthorized();
+            }
+
+            var artigos = await _service.ImportarDaBibliotecaAsync(
+                revisaoId,
+                usuarioId,
+                importacaoBibliotecaId);
+
+            return Ok(new
+            {
+                mensagem =
+                    "Arquivo da Biblioteca importado para a revisão com sucesso.",
+                quantidadeArtigos = artigos.Count
             });
         }
     }

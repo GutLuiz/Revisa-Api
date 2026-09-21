@@ -1,5 +1,6 @@
 ﻿using UepaMed.Application.Dtos;
 using UepaMed.Domain.Entities.Arquivos;
+using UepaMed.Domain.Entities.Artigos;
 
 
 namespace UepaMed.Application.Interfaces.Arquivos
@@ -14,5 +15,9 @@ namespace UepaMed.Application.Interfaces.Arquivos
 
        
         Task RemoverAsync(ArquivoImportacao arquivo);
+
+        Task AdicionarComArtigosAsync(
+        ArquivoImportacao arquivo,
+        List<Artigo> artigos);
     }
 }

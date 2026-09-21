@@ -21,5 +21,7 @@ namespace UepaMed.Domain.Entities.Arquivos
         public Revisao Revisao { get; set; } = null!;
 
         public ICollection<Artigo> Artigos { get; set; } = new List<Artigo>();
+        public OrigemImportacao Origem { get; set; }
+    = OrigemImportacao.Dispositivo;
     }
 }

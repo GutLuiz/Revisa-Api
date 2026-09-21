@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using UepaMed.Application.Interfaces.Arquivos;
 using UepaMed.Application.Interfaces.Artigos;
+using UepaMed.Application.Interfaces.Bibliotecas;
 using UepaMed.Application.Interfaces.Convites;
 using UepaMed.Application.Interfaces.Planilhas;
 using UepaMed.Application.Interfaces.Revisoes;
@@ -16,6 +17,7 @@ using UepaMed.Infrastructure.Data;
 using UepaMed.Infrastructure.Importers;
 using UepaMed.Infrastructure.Repositories.Arquivos;
 using UepaMed.Infrastructure.Repositories.Artigos;
+using UepaMed.Infrastructure.Repositories.Bibliotecas;
 using UepaMed.Infrastructure.Repositories.Planilhas;
 using UepaMed.Infrastructure.Repositories.Revisoes;
 using UepaMed.Infrastructure.Repositories.Usuarios;
@@ -71,6 +73,9 @@ builder.Services.AddScoped<DuplicidadeService>();
 
 builder.Services.AddScoped<IPlanilhaRepository, PlanilhaRepository>();
 builder.Services.AddScoped<PlanilhaService>();
+
+builder.Services.AddScoped<IBibliotecaRepository, BibliotecaRepository>();
+builder.Services.AddScoped<BibliotecaService>();
 
 var frontendOrigin = builder.Configuration["Frontend:Origin"];
 

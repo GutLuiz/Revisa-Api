@@ -2,6 +2,7 @@
 using UepaMed.Application.Dtos;
 using UepaMed.Application.Interfaces.Arquivos;
 using UepaMed.Domain.Entities.Arquivos;
+using UepaMed.Domain.Entities.Artigos;
 using UepaMed.Domain.Enums;
 using UepaMed.Infrastructure.Data;
 
@@ -40,6 +41,23 @@ namespace UepaMed.Infrastructure.Repositories.Arquivos
         public async Task RemoverAsync(ArquivoImportacao arquivo)
         {
             _context.ArquivosImportacao.Remove(arquivo);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task AdicionarComArtigosAsync(
+      ArquivoImportacao arquivo,
+      List<Artigo> artigos)
+        {
+            foreach (var artigo in artigos)
+            {
+                artigo.RevisaoId = arquivo.RevisaoId;
+                artigo.ArquivoImportacao = arquivo;
+            }
+
+            arquivo.Artigos = artigos;
+
+            await _context.ArquivosImportacao.AddAsync(arquivo);
+
             await _context.SaveChangesAsync();
         }
     }

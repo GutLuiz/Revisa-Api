@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using UepaMed.Domain.Entities.Arquivos;
 using UepaMed.Domain.Entities.Artigos;
+using UepaMed.Domain.Entities.Bibliotecas;
 using UepaMed.Domain.Entities.Planilhas;
 using UepaMed.Domain.Entities.Revisoes;
 using UepaMed.Domain.Entities.Usuarios;
@@ -32,6 +33,12 @@ namespace UepaMed.Infrastructure.Data
         public DbSet<PlanilhaLinha> PlanilhasLinha { get; set; }
         public DbSet<PlanilhaCelula> PlanilhasCelula { get; set; }
 
+        public DbSet<Biblioteca> Bibliotecas => Set<Biblioteca>();
+        public DbSet<ArquivoImportacaoBiblioteca> ArquivosImportacaoBiblioteca
+            => Set<ArquivoImportacaoBiblioteca>();
+        public DbSet<ArtigoBiblioteca> ArtigosBiblioteca
+            => Set<ArtigoBiblioteca>();
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Usuario>()
@@ -52,6 +59,10 @@ namespace UepaMed.Infrastructure.Data
             .WithMany()
             .HasForeignKey(rm => rm.RevisaoId)
             .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<ArquivoImportacao>()
+            .Property(arquivo => arquivo.Origem)
+            .HasConversion<int>()
+            .IsRequired();
             modelBuilder.Entity<ConviteRevisao>(entity =>
             {
                 entity.HasKey(c => c.Id);
@@ -292,6 +303,44 @@ namespace UepaMed.Infrastructure.Data
                     .HasForeignKey(celula => celula.PlanilhaColunaId)
                     .OnDelete(DeleteBehavior.Cascade);
             });
+
+            modelBuilder.Entity<Biblioteca>(entity =>
+            {
+                entity.HasKey(b => b.Id);
+
+                entity.Property(b => b.Titulo).IsRequired();
+
+                entity.HasIndex(b => b.UsuarioId);
+
+                entity.HasOne(b => b.Usuario)
+                    .WithMany()
+                    .HasForeignKey(b => b.UsuarioId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasMany(b => b.Importacoes)
+                    .WithOne(i => i.Biblioteca)
+                    .HasForeignKey(i => i.BibliotecaId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<ArquivoImportacaoBiblioteca>(entity =>
+            {
+                entity.HasKey(i => i.Id);
+
+                entity.Property(i => i.NomeArquivo).IsRequired();
+
+                entity.Property(i => i.TipoArquivo)
+                    .HasConversion<int>()
+                    .IsRequired();
+
+                entity.HasMany(i => i.Artigos)
+                    .WithOne(a => a.ArquivoImportacao)
+                    .HasForeignKey(a => a.ArquivoImportacaoBibliotecaId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<ArtigoBiblioteca>()
+                .HasKey(a => a.Id);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using UepaMed.Application.Dtos.importacao;
 using UepaMed.Application.Interfaces.Arquivos;
 using UepaMed.Application.Interfaces.Artigos;
+using UepaMed.Application.Interfaces.Bibliotecas;
 using UepaMed.Application.Interfaces.Revisoes;
 using UepaMed.Application.Interfaces.Votacoes;
 using UepaMed.Domain.Entities.Arquivos;
@@ -17,19 +18,23 @@ namespace UepaMed.Application.Services
         private readonly IArtigoRepository _artigoRepository;
         private readonly IVotacaoRepository _votacaoRepository;
         private readonly IRevisaoMembroRepository _revisaoMembroRepository;
+        private readonly IBibliotecaRepository _bibliotecaRepository;
+
 
         public ImportacaoArtigosService(
             IEnumerable<IImportadorArtigos> importadores,
             IArquivoImportacaoRepository arquivoRepository,
             IArtigoRepository artigoRepository,
             IVotacaoRepository votacaoRepository,
-            IRevisaoMembroRepository revisaoMembroRepository)
+            IRevisaoMembroRepository revisaoMembroRepository,
+            IBibliotecaRepository bibliotecaRepository)
         {
             _importadores = importadores;
             _arquivoRepository = arquivoRepository;
             _artigoRepository = artigoRepository;
             _votacaoRepository = votacaoRepository;
             _revisaoMembroRepository = revisaoMembroRepository;
+            _bibliotecaRepository = bibliotecaRepository;
         }
 
         public async Task<List<Artigo>> ImportarAsync(
@@ -78,7 +83,8 @@ namespace UepaMed.Application.Services
                 NomeArquivo = nomeArquivo,
                 TipoArquivo = ObterTipoArquivo(extensao),
                 QuantidadeArtigos = artigos.Count,
-                DataImportacao = DateTime.UtcNow
+                DataImportacao = DateTime.UtcNow,
+                Origem = OrigemImportacao.Dispositivo
             };
 
             await _arquivoRepository
@@ -127,7 +133,8 @@ namespace UepaMed.Application.Services
                         status?.QuantidadePendentes ?? 0,
 
                     QuantidadeExcluidos =
-                        status?.QuantidadeExcluidos ?? 0
+                        status?.QuantidadeExcluidos ?? 0,
+                    Origem = arquivo.Origem
                 };
             }).ToList();
         }
@@ -166,6 +173,79 @@ namespace UepaMed.Application.Services
 
             await _arquivoRepository
                 .RemoverAsync(arquivo);
+        }
+
+        public async Task<List<Artigo>> ImportarDaBibliotecaAsync(
+            int revisaoId,
+            int usuarioId,
+            int importacaoBibliotecaId)
+        {
+            var votacaoAtiva = await _votacaoRepository
+                .ObterAtivaPorRevisaoAsync(revisaoId);
+
+            var podeImportar = await _revisaoMembroRepository
+                .PodeImportarArquivoAsync(revisaoId, usuarioId);
+
+            if (!podeImportar)
+            {
+                throw new UnauthorizedAccessException(
+                    "Apenas o proprietário ou um revisor podem importar arquivos nesta revisão.");
+            }
+
+            if (votacaoAtiva is not null)
+            {
+                throw new InvalidOperationException(
+                    "Não é possível importar artigos enquanto a revisão está em votação.");
+            }
+
+            var importacaoBiblioteca = await _bibliotecaRepository
+                .ObterImportacaoComArtigosPorIdEUsuarioAsync(
+                    importacaoBibliotecaId,
+                    usuarioId);
+
+            if (importacaoBiblioteca is null)
+            {
+                throw new KeyNotFoundException(
+                    "Arquivo não encontrado na sua Biblioteca.");
+            }
+
+            var arquivoDestino = new ArquivoImportacao
+            {
+                RevisaoId = revisaoId,
+                NomeArquivo = importacaoBiblioteca.NomeArquivo,
+                TipoArquivo = importacaoBiblioteca.TipoArquivo,
+                QuantidadeArtigos = importacaoBiblioteca.Artigos.Count,
+                DataImportacao = DateTime.UtcNow,
+                Origem = OrigemImportacao.Biblioteca
+            };
+
+            var artigosDestino = importacaoBiblioteca.Artigos
+                .Select(artigoBiblioteca => new Artigo
+                {
+                    RevisaoId = revisaoId,
+                    Titulo = artigoBiblioteca.Titulo,
+                    Resumo = artigoBiblioteca.Resumo,
+                    Autores = artigoBiblioteca.Autores,
+                    Revista = artigoBiblioteca.Revista,
+                    AnoPublicacao = artigoBiblioteca.AnoPublicacao,
+                    DOI = artigoBiblioteca.DOI,
+                    PMID = artigoBiblioteca.PMID,
+                    TipoPublicacao = artigoBiblioteca.TipoPublicacao,
+                    Paginas = artigoBiblioteca.Paginas,
+                    Volume = artigoBiblioteca.Volume,
+                    Numero = artigoBiblioteca.Numero,
+                    Url = artigoBiblioteca.Url,
+                    Idioma = artigoBiblioteca.Idioma,
+                    Status = StatusArtigo.Pendente,
+                    ArquivoImportacao = arquivoDestino
+                })
+                .ToList();
+
+            await _arquivoRepository.AdicionarComArtigosAsync(
+                arquivoDestino,
+                artigosDestino);
+
+            return artigosDestino;
         }
 
         private static TipoArquivoImportacao

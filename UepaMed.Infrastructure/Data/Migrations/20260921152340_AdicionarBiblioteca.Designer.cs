@@ -2,18 +2,21 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using UepaMed.Infrastructure.Data;
 
 #nullable disable
 
-namespace UepaMed.Infrastructure.Migrations
+namespace UepaMed.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260921152340_AdicionarBiblioteca")]
+    partial class AdicionarBiblioteca
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,9 +39,6 @@ namespace UepaMed.Infrastructure.Migrations
                     b.Property<string>("NomeArquivo")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<int>("Origem")
-                        .HasColumnType("integer");
 
                     b.Property<int>("QuantidadeArtigos")
                         .HasColumnType("integer");
