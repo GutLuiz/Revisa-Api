@@ -41,7 +41,8 @@ namespace UepaMed.Application.Services
             int revisaoId,
             int usuarioId,
             Stream arquivo,
-            string nomeArquivo)
+            string nomeArquivo,
+            BasePesquisa basePesquisa)
         {
             var extensao = Path
                 .GetExtension(nomeArquivo)
@@ -84,7 +85,8 @@ namespace UepaMed.Application.Services
                 TipoArquivo = ObterTipoArquivo(extensao),
                 QuantidadeArtigos = artigos.Count,
                 DataImportacao = DateTime.UtcNow,
-                Origem = OrigemImportacao.Dispositivo
+                Origem = OrigemImportacao.Dispositivo,
+                BasePesquisa = basePesquisa
             };
 
             await _arquivoRepository
@@ -216,7 +218,8 @@ namespace UepaMed.Application.Services
                 TipoArquivo = importacaoBiblioteca.TipoArquivo,
                 QuantidadeArtigos = importacaoBiblioteca.Artigos.Count,
                 DataImportacao = DateTime.UtcNow,
-                Origem = OrigemImportacao.Biblioteca
+                Origem = OrigemImportacao.Biblioteca,
+                BasePesquisa = importacaoBiblioteca.BasePesquisa
             };
 
             var artigosDestino = importacaoBiblioteca.Artigos

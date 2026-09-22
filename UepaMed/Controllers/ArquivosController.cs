@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using UepaMed.Application.Services;
 using System.Security.Claims;
 using UepaMed.Domain.Entities.Usuarios;
+using UepaMed.Domain.Enums.Arquivos;
 
 namespace UepaMed.Controllers
 {
@@ -21,9 +22,17 @@ namespace UepaMed.Controllers
 
         [HttpPost]
         public async Task<IActionResult> ImportarArquivo(
-            int revisaoId, int usuarioId,
-            [FromForm] IFormFile arquivo)
+        int revisaoId,
+        int usuarioId,
+        [FromForm] IFormFile arquivo,
+        [FromForm] BasePesquisa? basePesquisa)
         {
+            if (!basePesquisa.HasValue ||
+                !Enum.IsDefined(basePesquisa.Value))
+            {
+                return BadRequest(
+                    "Selecione uma base de pesquisa válida.");
+            }
             if (arquivo == null || arquivo.Length == 0)
             {
                 return BadRequest(
@@ -51,7 +60,8 @@ namespace UepaMed.Controllers
                 revisaoId,
                 usuarioId,
                 stream,
-                arquivo.FileName);
+                arquivo.FileName,
+                basePesquisa.Value);
 
             return Ok(new
             {

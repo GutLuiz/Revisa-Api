@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using UepaMed.Application.Dtos.importacao;
+using UepaMed.Application.Dtos.Prisma;
 using UepaMed.Application.Dtos.Revisoes;
 using UepaMed.Application.Interfaces.Artigos;
 using UepaMed.Domain.Entities.Artigos;
 using UepaMed.Domain.Enums;
+using UepaMed.Domain.Enums.Arquivos;
 using UepaMed.Domain.Enums.Artigos;
 using UepaMed.Infrastructure.Data;
 
@@ -155,6 +157,40 @@ namespace UepaMed.Infrastructure.Repositories.Artigos
                 MotivoExclusaoArtigo.Duplicidade;
 
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<PrismaTriagemDto>
+    ObterArtigosParaVotacaoPorBaseAsync(int revisaoId)
+        {
+            var grupos = await _context.Artigos
+                .AsNoTracking()
+                .Where(artigo =>
+                    artigo.RevisaoId == revisaoId &&
+                    !(artigo.Status == StatusArtigo.Excluido &&
+                      artigo.MotivoExclusao ==
+                          MotivoExclusaoArtigo.Duplicidade))
+                .GroupBy(artigo =>
+                    artigo.ArquivoImportacao.BasePesquisa)
+                .Select(grupo => new
+                {
+                    BasePesquisa = grupo.Key,
+                    Quantidade = grupo.Count()
+                })
+                .ToListAsync();
+
+            int Quantidade(BasePesquisa? basePesquisa) =>
+                grupos.FirstOrDefault(grupo =>
+                    grupo.BasePesquisa == basePesquisa
+                )?.Quantidade ?? 0;
+
+            return new PrismaTriagemDto
+            {
+                PubMed = Quantidade(BasePesquisa.PubMed),
+                SciELO = Quantidade(BasePesquisa.SciELO),
+                Scopus = Quantidade(BasePesquisa.Scopus),
+                BVS = Quantidade(BasePesquisa.BVS),
+                SemBasePesquisa = Quantidade(null)
+            };
         }
     }
 }

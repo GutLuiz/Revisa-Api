@@ -1,4 +1,5 @@
-﻿using UepaMed.Domain.Entities.Planilhas;
+﻿using UepaMed.Application.Dtos.Prisma;
+using UepaMed.Domain.Entities.Planilhas;
 
 namespace UepaMed.Application.Interfaces.Planilhas
 {
@@ -17,5 +18,12 @@ namespace UepaMed.Application.Interfaces.Planilhas
 
         Task RemoverLinhaAsync(PlanilhaLinha linha);
         Task RemoverColunaAsync(PlanilhaColuna coluna);
+        Task<List<PrismaMotivoExclusaoDto>>
+         ObterMotivosExclusaoElegibilidadeAsync(int revisaoId);
+
+        Task<PrismaElegibilidadeDto>
+         ObterSelecionadosLeituraIntegraPorBaseAsync(int revisaoId);
+        Task<PrismaAmostraFinalDto> ObterAmostraFinalPorBaseAsync(
+            int revisaoId);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using UepaMed.Application.Dtos;
+using UepaMed.Application.Dtos.Prisma;
 using UepaMed.Domain.Entities.Arquivos;
 using UepaMed.Domain.Entities.Artigos;
 
@@ -19,5 +20,8 @@ namespace UepaMed.Application.Interfaces.Arquivos
         Task AdicionarComArtigosAsync(
         ArquivoImportacao arquivo,
         List<Artigo> artigos);
+
+        Task<PrismaIdentificacaoDto>
+        ObterIdentificacaoPrismaAsync(int revisaoId);
     }
 }

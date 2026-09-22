@@ -63,6 +63,9 @@ namespace UepaMed.Infrastructure.Data
             .Property(arquivo => arquivo.Origem)
             .HasConversion<int>()
             .IsRequired();
+            modelBuilder.Entity<ArquivoImportacao>()
+            .Property(arquivo => arquivo.BasePesquisa)
+            .HasConversion<int?>();
             modelBuilder.Entity<ConviteRevisao>(entity =>
             {
                 entity.HasKey(c => c.Id);
@@ -337,6 +340,8 @@ namespace UepaMed.Infrastructure.Data
                     .WithOne(a => a.ArquivoImportacao)
                     .HasForeignKey(a => a.ArquivoImportacaoBibliotecaId)
                     .OnDelete(DeleteBehavior.Cascade);
+                entity.Property(importacao => importacao.BasePesquisa)
+                    .HasConversion<int?>();
             });
 
             modelBuilder.Entity<ArtigoBiblioteca>()

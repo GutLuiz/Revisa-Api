@@ -9,7 +9,7 @@ namespace UepaMed.Application.Dtos.Biblioteca
 
         public string? Descricao { get; set; }
 
-        public List<IFormFile> Arquivos { get; set; } = new();
+        public List<ArquivoComBasePesquisaDto> Arquivos { get; set; } = new();
     }
 
 }

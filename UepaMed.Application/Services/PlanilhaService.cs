@@ -156,9 +156,9 @@ namespace UepaMed.Application.Services
         }
 
         public async Task AtualizarCelulaAsync(
-    int revisaoId,
-    int celulaId,
-    AtualizarCelulaPlanilhaDto dto)
+        int revisaoId,
+        int celulaId,
+        AtualizarCelulaPlanilhaDto dto)
         {
             if (revisaoId <= 0)
             {
@@ -270,6 +270,26 @@ namespace UepaMed.Application.Services
                     celula.Valor = classificacao.ToString();
                     break;
 
+                case TipoColunaPlanilha.MotivoExclusaoElegibilidade:
+                    if (string.IsNullOrWhiteSpace(valor))
+                    {
+                        celula.Valor = null;
+                        break;
+                    }
+
+                    if (!Enum.TryParse<MotivoExclusaoElegibilidade>(
+                            valor,
+                            true,
+                            out var motivo)
+                        || !Enum.IsDefined(motivo))
+                    {
+                        throw new ArgumentException(
+                            "O motivo de exclusão é inválido.");
+                    }
+
+                    celula.Valor = motivo.ToString();
+                    break;
+
                 default:
                     throw new InvalidOperationException(
                         "O tipo da coluna não é suportado.");
@@ -280,8 +300,8 @@ namespace UepaMed.Application.Services
             await _planilhaRepository.SalvarAsync();
         }
         public async Task RemoverLinhaAsync(
-    int revisaoId,
-    int linhaId)
+        int revisaoId,
+        int linhaId)
         {
             if (revisaoId <= 0)
             {
@@ -330,7 +350,7 @@ namespace UepaMed.Application.Services
             await _planilhaRepository.SalvarAsync();
         }
         public async Task<AdicionarLinhaManualRespostaDto>
-    AdicionarLinhaManualAsync(int revisaoId)
+        AdicionarLinhaManualAsync(int revisaoId)
         {
             if (revisaoId <= 0)
             {
@@ -395,9 +415,9 @@ namespace UepaMed.Application.Services
         }
 
         public async Task<AdicionarColunaPlanilhaRespostaDto>
-    AdicionarColunaAsync(
-        int revisaoId,
-        AdicionarColunaPlanilhaDto dto)
+        AdicionarColunaAsync(
+            int revisaoId,
+            AdicionarColunaPlanilhaDto dto)
         {
             if (revisaoId <= 0)
             {
@@ -497,9 +517,9 @@ namespace UepaMed.Application.Services
         }
 
         public async Task AtualizarColunaAsync(
-    int revisaoId,
-    int colunaId,
-    AtualizarColunaPlanilhaDto dto)
+        int revisaoId,
+        int colunaId,
+        AtualizarColunaPlanilhaDto dto)
         {
             if (revisaoId <= 0)
             {
@@ -578,8 +598,8 @@ namespace UepaMed.Application.Services
         }
 
         public async Task RemoverColunaAsync(
-    int revisaoId,
-    int colunaId)
+        int revisaoId,
+        int colunaId)
         {
             if (revisaoId <= 0)
             {
@@ -661,16 +681,22 @@ namespace UepaMed.Application.Services
                     },
                     new()
                     {
+                        Nome = "Motivo da exclusão",
+                        Tipo = TipoColunaPlanilha.MotivoExclusaoElegibilidade,
+                        Ordem = 2
+                    },
+                    new()
+                    {
                         Nome = "Avaliador responsável",
                         Tipo = TipoColunaPlanilha.Membro,
-                        Ordem = 2
+                        Ordem = 3
                     },
                     new()
                     {
                         Nome = "DOI",
                         Tipo = TipoColunaPlanilha.Texto,
                         CampoArtigoOrigem = CampoArtigoPlanilha.DOI,
-                        Ordem = 3
+                        Ordem = 4
                     },
                     new()
                     {
@@ -678,45 +704,45 @@ namespace UepaMed.Application.Services
                         Tipo = TipoColunaPlanilha.Numero,
                         CampoArtigoOrigem =
                             CampoArtigoPlanilha.AnoPublicacao,
-                        Ordem = 4
+                        Ordem = 5
                     },
                     new()
                     {
                         Nome = "Título completo",
                         Tipo = TipoColunaPlanilha.Texto,
                         CampoArtigoOrigem = CampoArtigoPlanilha.Titulo,
-                        Ordem = 5
+                        Ordem = 6
                     },
                     new()
                     {
                         Nome = "Autores",
                         Tipo = TipoColunaPlanilha.Texto,
                         CampoArtigoOrigem = CampoArtigoPlanilha.Autores,
-                        Ordem = 6
+                        Ordem = 7
                     },
                     new()
                     {
                         Nome = "País",
                         Tipo = TipoColunaPlanilha.Texto,
-                        Ordem = 7
+                        Ordem = 8
                     },
                     new()
                     {
                         Nome = "Idioma",
                         Tipo = TipoColunaPlanilha.Texto,
-                        Ordem = 8
+                        Ordem = 9
                     },
                     new()
                     {
                         Nome = "Tipo de estudo",
                         Tipo = TipoColunaPlanilha.Texto,
-                        Ordem = 9
+                        Ordem = 10
                     },
                     new()
                     {
                         Nome = "Metodologia",
                         Tipo = TipoColunaPlanilha.Texto,
-                        Ordem = 10
+                        Ordem = 11
                     }
                 }
             };

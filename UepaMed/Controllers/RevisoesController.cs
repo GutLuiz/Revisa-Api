@@ -13,12 +13,14 @@ namespace UepaMed.Controllers
     public class RevisoesController : ControllerBase
     {
         private readonly RevisaoService _revisaoService;
+        private readonly PrismaService _prismaService;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public RevisoesController(RevisaoService revisaoService, IHttpContextAccessor httpContextAccessor)
+        public RevisoesController(RevisaoService revisaoService,PrismaService prismaService ,IHttpContextAccessor httpContextAccessor)
         {
             _revisaoService = revisaoService;
             _httpContextAccessor = httpContextAccessor;
+            _prismaService = prismaService;
         }
 
         [HttpPost]
@@ -166,6 +168,15 @@ namespace UepaMed.Controllers
                 dto.CriteriosVotacao);
 
             return NoContent();
+        }
+        [HttpGet("{revisaoId:int}/prisma")]
+        public async Task<IActionResult> ObterPrisma(
+        int revisaoId)
+        {
+            var prisma = await _prismaService
+                .ObterResumoAsync(revisaoId);
+
+            return Ok(prisma);
         }
     }
 }

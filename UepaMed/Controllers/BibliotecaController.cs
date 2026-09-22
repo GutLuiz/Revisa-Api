@@ -58,7 +58,7 @@ namespace UepaMed.Controllers
         [HttpPost("{bibliotecaId:int}/importacoes")]
         public async Task<IActionResult> AdicionarImportacoes(
         int bibliotecaId,
-        [FromForm] List<IFormFile> arquivos)
+        [FromForm] List<ArquivoComBasePesquisaDto> arquivos)
         {
             var importacoes = await _bibliotecaService
                 .AdicionarImportacoesAsync(bibliotecaId, arquivos);

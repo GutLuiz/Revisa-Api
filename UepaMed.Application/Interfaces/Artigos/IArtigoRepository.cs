@@ -1,4 +1,5 @@
 ﻿using UepaMed.Application.Dtos.importacao;
+using UepaMed.Application.Dtos.Prisma;
 using UepaMed.Application.Dtos.Revisoes;
 using UepaMed.Domain.Entities.Artigos;
 using UepaMed.Domain.Enums;
@@ -25,5 +26,7 @@ namespace UepaMed.Application.Interfaces.Artigos
         int revisaoId,
         int artigoDuplicadoId,
         int artigoMantidoId);
+        Task<PrismaTriagemDto> ObterArtigosParaVotacaoPorBaseAsync(
+         int revisaoId);
     }
 }

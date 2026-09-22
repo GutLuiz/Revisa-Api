@@ -18,6 +18,8 @@ namespace UepaMed.Domain.Entities.Bibliotecas
 
         public DateTime DataImportacao { get; set; }
 
+        public BasePesquisa? BasePesquisa { get; set; }
+
         public ICollection<ArtigoBiblioteca> Artigos { get; set; }
             = new List<ArtigoBiblioteca>();
     }

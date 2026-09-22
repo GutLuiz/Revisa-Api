@@ -76,6 +76,7 @@ builder.Services.AddScoped<PlanilhaService>();
 
 builder.Services.AddScoped<IBibliotecaRepository, BibliotecaRepository>();
 builder.Services.AddScoped<BibliotecaService>();
+builder.Services.AddScoped<PrismaService>();
 
 var frontendOrigin = builder.Configuration["Frontend:Origin"];
 

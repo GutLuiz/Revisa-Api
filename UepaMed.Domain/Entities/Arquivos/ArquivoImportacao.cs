@@ -19,9 +19,8 @@ namespace UepaMed.Domain.Entities.Arquivos
         public DateTime DataImportacao { get; set; }
 
         public Revisao Revisao { get; set; } = null!;
-
+        public BasePesquisa? BasePesquisa { get; set; }
         public ICollection<Artigo> Artigos { get; set; } = new List<Artigo>();
-        public OrigemImportacao Origem { get; set; }
-    = OrigemImportacao.Dispositivo;
+        public OrigemImportacao Origem { get; set; } = OrigemImportacao.Dispositivo;
     }
 }

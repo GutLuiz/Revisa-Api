@@ -45,13 +45,10 @@ namespace UepaMed.Application.Services
                 DataCriacao = DateTime.UtcNow
             };
 
-            foreach (var arquivo in dto.Arquivos)
+            foreach (var item in dto.Arquivos) 
             {
-                if (arquivo.Length == 0)
-                {
-                    throw new ArgumentException(
-                        $"O arquivo {arquivo.FileName} está vazio.");
-                }
+                var (arquivo, basePesquisa) = ValidarArquivo(item);
+
 
                 var extensao = Path.GetExtension(arquivo.FileName)
                     .ToLowerInvariant();
@@ -79,7 +76,8 @@ namespace UepaMed.Application.Services
                     DataImportacao = DateTime.UtcNow,
                     Artigos = artigosImportados
                         .Select(MapearArtigo)
-                        .ToList()
+                        .ToList(),
+                    BasePesquisa = basePesquisa,
                 };
 
                 biblioteca.Importacoes.Add(importacao);
@@ -179,7 +177,7 @@ namespace UepaMed.Application.Services
         public async Task<List<ImportacaoBibliotecaCriadaDto>>
     AdicionarImportacoesAsync(
         int bibliotecaId,
-        List<IFormFile> arquivos)
+       List<ArquivoComBasePesquisaDto> arquivos)
         {
             var usuarioId = ObterUsuarioId();
 
@@ -201,13 +199,11 @@ namespace UepaMed.Application.Services
             var importacoesCriadas =
                 new List<ArquivoImportacaoBiblioteca>();
 
-            foreach (var arquivo in arquivos)
+            foreach (var item in arquivos) // Em AdicionarImportacoesAsync, use: arquivos
             {
-                if (arquivo.Length == 0)
-                {
-                    throw new ArgumentException(
-                        $"O arquivo {arquivo.FileName} está vazio.");
-                }
+                var (arquivo, basePesquisa) = ValidarArquivo(item);
+
+                // Continue com o código atual a partir de "var extensao = ...".
 
                 var extensao = Path.GetExtension(arquivo.FileName)
                     .ToLowerInvariant();
@@ -236,7 +232,8 @@ namespace UepaMed.Application.Services
                     DataImportacao = DateTime.UtcNow,
                     Artigos = artigosImportados
                         .Select(MapearArtigo)
-                        .ToList()
+                        .ToList(),
+                    BasePesquisa = basePesquisa
                 };
 
                 biblioteca.Importacoes.Add(importacao);
@@ -313,6 +310,20 @@ namespace UepaMed.Application.Services
                     QuantidadeArtigos = importacao.QuantidadeArtigos,
                     DataImportacao = importacao.DataImportacao
                 }).ToList();
+        }
+
+        private static (IFormFile Arquivo, BasePesquisa BasePesquisa)
+        ValidarArquivo(ArquivoComBasePesquisaDto item)
+        {
+            if (item?.Arquivo is not { Length: > 0 } arquivo)
+                throw new ArgumentException("Arquivo não enviado ou vazio.");
+
+            if (item.BasePesquisa is not { } basePesquisa ||
+                !Enum.IsDefined(basePesquisa))
+                throw new ArgumentException(
+                    "Selecione uma base de pesquisa válida para cada arquivo.");
+
+            return (arquivo, basePesquisa);
         }
 
         private int ObterUsuarioId()
