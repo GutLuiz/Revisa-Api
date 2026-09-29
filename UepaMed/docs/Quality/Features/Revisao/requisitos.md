@@ -33,13 +33,14 @@
 
 01 - Importar artigos
 	= Usuários com papel Proprietário ou Revisor devem poder importar arquivos de artigos para a revisão.
+	= Esses usuários podem importar artigos da base de dados ou do proprio dispositivo
 
-02 - Resolver artigos duplicados
+02 - Excluir artigos importados
+	= Usuários com papel Proprietário ou Revisor devem poder excluir arquivos de artigos incluídos na revisão
+
+03 - Resolver artigos duplicados
 	= Somente o Proprietário deve poder resolver artigos duplicados identificados pelo sistema.
 	= Artigos duplicados devem voltar para a lista de artigos como excluído
-
-03 - Excluir artigos importados
-	= Usuários com papel Proprietário ou Revisor devem poder excluir arquivos de artigos incluídos na revisão
 
 04 - Visualizar lista de artigos
 	= Todos os participantes ativos devem poder visualizar os artigos da revisão na seção Lista de artigos.
