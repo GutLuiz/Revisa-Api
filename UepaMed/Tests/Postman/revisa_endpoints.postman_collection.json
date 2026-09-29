@@ -1,7 +1,7 @@
 {
   "info": {
     "_postman_id": "560998a2-08b3-4ee5-a677-d5220d1d0e6d",
-    "name": "uepamed_endpoints",
+    "name": "revisa_endpoints",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_exporter_id": "38516617"
   },
@@ -128,12 +128,10 @@
                       }
                     },
                     "url": {
-                      "raw": "http://localhost:5080/api/auth/registro",
-                      "protocol": "http",
+                      "raw": "{{base_url}}/api/auth/registro",
                       "host": [
-                        "localhost"
+                        "{{base_url}}"
                       ],
-                      "port": "5080",
                       "path": [
                         "api",
                         "auth",
@@ -159,12 +157,10 @@
                       }
                     },
                     "url": {
-                      "raw": "http://localhost:5080/api/auth/registro",
-                      "protocol": "http",
+                      "raw": "{{base_url}}/api/auth/registro",
                       "host": [
-                        "localhost"
+                        "{{base_url}}"
                       ],
-                      "port": "5080",
                       "path": [
                         "api",
                         "auth",
@@ -190,12 +186,10 @@
                       }
                     },
                     "url": {
-                      "raw": "http://localhost:5080/api/auth/registro",
-                      "protocol": "http",
+                      "raw": "{{base_url}}/api/auth/registro",
                       "host": [
-                        "localhost"
+                        "{{base_url}}"
                       ],
-                      "port": "5080",
                       "path": [
                         "api",
                         "auth",
@@ -226,12 +220,10 @@
                       }
                     },
                     "url": {
-                      "raw": "http://localhost:5080/api/auth/registro",
-                      "protocol": "http",
+                      "raw": "{{base_url}}/api/auth/registro",
                       "host": [
-                        "localhost"
+                        "{{base_url}}"
                       ],
-                      "port": "5080",
                       "path": [
                         "api",
                         "auth",
@@ -257,12 +249,10 @@
                       }
                     },
                     "url": {
-                      "raw": "http://localhost:5080/api/auth/registro",
-                      "protocol": "http",
+                      "raw": "{{base_url}}/api/auth/registro",
                       "host": [
-                        "localhost"
+                        "{{base_url}}"
                       ],
-                      "port": "5080",
                       "path": [
                         "api",
                         "auth",
@@ -282,7 +272,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n    \"nome\": \"julio Lino\",\r\n    \"email\": \"juliolino@gmail.com\",\r\n    \"senha\": \"gabriela123\"\r\n}",
+                  "raw": "{\r\n    \"nome\": \"julio Lino\",\r\n    \"email\": \"teste@teste.com\",\r\n    \"senha\": \"1234567\"\r\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -290,19 +280,17 @@
                   }
                 },
                 "url": {
-                  "raw": "http://localhost:5080/api/auth/registro",
-                  "protocol": "http",
+                  "raw": "{{base_url}}/api/auth/registro",
                   "host": [
-                    "localhost"
+                    "{{base_url}}"
                   ],
-                  "port": "5080",
                   "path": [
                     "api",
                     "auth",
                     "registro"
                   ]
                 },
-                "description": "Este endpoint realiza o cadastro de um novo usuário.\n\nResultado esperado para uma requisição válida:\n\n- Retornar status 201 Created.\n    \n- Criar o usuário no sistema.\n    \n- Retornar os dados do usuário criado.\n    \n- Não retornar a senha no corpo da resposta.\n    \n\nEm caso de dados inválidos:\n\n- Retornar status 400 Bad Request.\n    \n- Informar quais campos são inválidos ou obrigatórios.\n    \n- Não criar nenhum usuário."
+                "description": "Este endpoint realiza o cadastro de um novo usuário.\n\nResultado esperado para uma requisição válida:\n\n- Retornar status 201 Created.\n    \n- Criar o usuário no sistema.\n    \n- Retornar os dados do usuário criado.\n    \n- Não retornar a senha no corpo da resposta."
               },
               "response": []
             }
@@ -329,12 +317,10 @@
                       }
                     },
                     "url": {
-                      "raw": "http://localhost:5080/api/auth/login",
-                      "protocol": "http",
+                      "raw": "{{base_url}}/api/auth/login",
                       "host": [
-                        "localhost"
+                        "{{base_url}}"
                       ],
-                      "port": "5080",
                       "path": [
                         "api",
                         "auth",
@@ -360,12 +346,10 @@
                       }
                     },
                     "url": {
-                      "raw": "http://localhost:5080/api/auth/login",
-                      "protocol": "http",
+                      "raw": "{{base_url}}/api/auth/login",
                       "host": [
-                        "localhost"
+                        "{{base_url}}"
                       ],
-                      "port": "5080",
                       "path": [
                         "api",
                         "auth",
@@ -383,7 +367,7 @@
                     "header": [],
                     "body": {
                       "mode": "raw",
-                      "raw": "{\r\n  \"email\": \"juliana@gmail.com\",\r\n  \"senha\": \"1234567\"\r\n}",
+                      "raw": "{\r\n  \"email\": \"jua@gmail.com\",\r\n  \"senha\": \"1234567\"\r\n}",
                       "options": {
                         "raw": {
                           "language": "json"
@@ -391,12 +375,10 @@
                       }
                     },
                     "url": {
-                      "raw": "http://localhost:5080/api/auth/login",
-                      "protocol": "http",
+                      "raw": "{{base_url}}/api/auth/login",
                       "host": [
-                        "localhost"
+                        "{{base_url}}"
                       ],
-                      "port": "5080",
                       "path": [
                         "api",
                         "auth",
@@ -427,12 +409,10 @@
                       }
                     },
                     "url": {
-                      "raw": "http://localhost:5080/api/auth/login",
-                      "protocol": "http",
+                      "raw": "{{base_url}}/api/auth/login",
                       "host": [
-                        "localhost"
+                        "{{base_url}}"
                       ],
-                      "port": "5080",
                       "path": [
                         "api",
                         "auth",
@@ -458,12 +438,10 @@
                       }
                     },
                     "url": {
-                      "raw": "http://localhost:5080/api/auth/login",
-                      "protocol": "http",
+                      "raw": "{{base_url}}/api/auth/login",
                       "host": [
-                        "localhost"
+                        "{{base_url}}"
                       ],
-                      "port": "5080",
                       "path": [
                         "api",
                         "auth",
@@ -483,7 +461,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n  \"email\": \"juliana@gmail.com\",\r\n  \"senha\": \"1234567\"\r\n}",
+                  "raw": "{\r\n  \"email\": \"luizgut2016@gmail.com\",\r\n  \"senha\": \"1234567\"\r\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -491,12 +469,10 @@
                   }
                 },
                 "url": {
-                  "raw": "http://localhost:5080/api/auth/login",
-                  "protocol": "http",
+                  "raw": "{{base_url}}/api/auth/login",
                   "host": [
-                    "localhost"
+                    "{{base_url}}"
                   ],
-                  "port": "5080",
                   "path": [
                     "api",
                     "auth",
@@ -512,13 +488,20 @@
               "request": {
                 "method": "POST",
                 "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
                 "url": {
-                  "raw": "http://localhost:5080/api/auth/logout",
-                  "protocol": "http",
+                  "raw": "{{base_url}}/api/auth/logout",
                   "host": [
-                    "localhost"
+                    "{{base_url}}"
                   ],
-                  "port": "5080",
                   "path": [
                     "api",
                     "auth",
@@ -537,7 +520,7 @@
       "name": "geral",
       "item": [
         {
-          "name": "cadastrar",
+          "name": "criar revisao",
           "item": [
             {
               "name": "Dados Válidos",
@@ -546,7 +529,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "",
+                  "raw": "{\r\n  \"titulo\": \"santos testeee\",\r\n  \"dominio\": 1,\r\n  \"tipo\": 1,\r\n  \"descricao\": \"Revisão criada para validar o fluxo de cadastro.\"\r\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -554,12 +537,10 @@
                   }
                 },
                 "url": {
-                  "raw": "http://localhost:5080/api/revisoes",
-                  "protocol": "http",
+                  "raw": "{{base_url}}/api/revisoes",
                   "host": [
-                    "localhost"
+                    "{{base_url}}"
                   ],
-                  "port": "5080",
                   "path": [
                     "api",
                     "revisoes"
@@ -584,12 +565,10 @@
                   }
                 },
                 "url": {
-                  "raw": "http://localhost:5080/api/revisoes",
-                  "protocol": "http",
+                  "raw": "{{base_url}}/api/revisoes",
                   "host": [
-                    "localhost"
+                    "{{base_url}}"
                   ],
-                  "port": "5080",
                   "path": [
                     "api",
                     "revisoes"
@@ -614,12 +593,10 @@
                   }
                 },
                 "url": {
-                  "raw": "http://localhost:5080/api/revisoes",
-                  "protocol": "http",
+                  "raw": "{{base_url}}/api/revisoes",
                   "host": [
-                    "localhost"
+                    "{{base_url}}"
                   ],
-                  "port": "5080",
                   "path": [
                     "api",
                     "revisoes"
@@ -644,12 +621,10 @@
                   }
                 },
                 "url": {
-                  "raw": "http://localhost:5080/api/revisoes",
-                  "protocol": "http",
+                  "raw": "{{base_url}}/api/revisoes",
                   "host": [
-                    "localhost"
+                    "{{base_url}}"
                   ],
-                  "port": "5080",
                   "path": [
                     "api",
                     "revisoes"
@@ -674,12 +649,10 @@
                   }
                 },
                 "url": {
-                  "raw": "http://localhost:5080/api/revisoes",
-                  "protocol": "http",
+                  "raw": "{{base_url}}/api/revisoes",
                   "host": [
-                    "localhost"
+                    "{{base_url}}"
                   ],
-                  "port": "5080",
                   "path": [
                     "api",
                     "revisoes"
@@ -692,142 +665,147 @@
           ]
         },
         {
-          "name": "Listar Revisoes",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:5080/api/revisoes",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "5080",
-              "path": [
-                "api",
-                "revisoes"
-              ]
-            },
-            "description": "Este endpoint realiza uma busca de todas as revisões que usuário faz parte\n\nRetorno esperado para uma requisição válida:\n\n- Retorno do status code 200 (OK)\n    \n- Retorno de todas as revisões que este usuário pertence"
-          },
-          "response": []
+          "name": "listar revisao",
+          "item": [
+            {
+              "name": "Listar Revisoes",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/revisoes",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "revisoes"
+                  ]
+                },
+                "description": "Este endpoint realiza uma busca de todas as revisões que usuário faz parte\n\nRetorno esperado para uma requisição válida:\n\n- Retorno do status code 200 (OK)\n    \n- Retorno de todas as revisões que este usuário pertence"
+              },
+              "response": []
+            }
+          ]
         },
         {
-          "name": "Editar Revisao Proprietario",
-          "request": {
-            "method": "PUT",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "  {\r\n        \"titulo\": \"teste 1 - EDITADO AGORA\",\r\n        \"tipo\": \"RevisaoSistematica\",\r\n        \"dominio\": \"Saude\",\r\n        \"descricao\": null\r\n    }",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+          "name": "editar revisao",
+          "item": [
+            {
+              "name": "Editar Revisao não proprietário",
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "  {\r\n        \"titulo\": \"teste 2 - EDITADO AGORA REVISOR\",\r\n        \"tipo\": \"RevisaoSistematica\",\r\n        \"dominio\": \"Saude\",\r\n        \"descricao\": null\r\n    }",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/revisoes/87",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "revisoes",
+                    "87"
+                  ]
+                },
+                "description": "Este endpoint realiza uma edição de revisão sem ser proprietário\n\nResultado esperado para uma requisição válida:\n\n- Retornar o status code 404 (Not Found)\n    \n- O id do usuário cadastrado é diferente do id que está na revisão"
+              },
+              "response": []
             },
-            "url": {
-              "raw": "http://localhost:5080/api/revisoes/18",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "5080",
-              "path": [
-                "api",
-                "revisoes",
-                "18"
-              ]
-            },
-            "description": "Este endpoint realiza uma edição de revisão de usuário que tem o papel PROPRIETÁRIO\n\nRetorno esperando para uma requisição válida:\n\n- Retornar status code 200 (OK)\n    \n- Atualizar o sistema os dados novos\n    \n- Retornar o corpo da revisão com os seus dados novos"
-          },
-          "response": []
+            {
+              "name": "Editar Revisao Proprietario",
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "  {\r\n        \"titulo\": \"teste 1 - EDITADO AGORA\",\r\n        \"tipo\": \"RevisaoSistematica\",\r\n        \"dominio\": \"Saude\",\r\n        \"descricao\": null\r\n    }",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{base_url}}/api/revisoes/87",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "revisoes",
+                    "87"
+                  ]
+                },
+                "description": "Este endpoint realiza uma edição de revisão de usuário que tem o papel PROPRIETÁRIO\n\nRetorno esperando para uma requisição válida:\n\n- Retornar status code 200 (OK)\n    \n- Atualizar o sistema os dados novos\n    \n- Retornar o corpo da revisão com os seus dados novos"
+              },
+              "response": []
+            }
+          ]
         },
         {
-          "name": "Editar Revisao não proprietário",
-          "request": {
-            "method": "PUT",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "  {\r\n        \"titulo\": \"teste 2 - EDITADO AGORA REVISOR\",\r\n        \"tipo\": \"RevisaoSistematica\",\r\n        \"dominio\": \"Saude\",\r\n        \"descricao\": null\r\n    }",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
+          "name": "excluir/sair revisao",
+          "item": [
+            {
+              "name": "Sair revisão (!Proprietário)",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/revisoes/64/membros/me",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "revisoes",
+                    "64",
+                    "membros",
+                    "me"
+                  ]
+                },
+                "description": "Este endpoint realiza a saída de uma revisão onde o papel do usuário é diferente de proprietário\n\nResultado esperado para a requisição válida:\n\n- Retonar um status code 204 (No Content)\n    \n- Usuário espcífico sair da revisão\n    \n- Revisão permanecer normal"
+              },
+              "response": []
             },
-            "url": {
-              "raw": "http://localhost:5080/api/revisoes/30",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "5080",
-              "path": [
-                "api",
-                "revisoes",
-                "30"
-              ]
-            },
-            "description": "Este endpoint realiza uma edição de revisão sem ser proprietário\n\nResultado esperado para uma requisição válida:\n\n- Retornar o status code 404 (Not Found)\n    \n- O id do usuário cadastrado é diferente do id que está na revisão"
-          },
-          "response": []
-        },
-        {
-          "name": "Excluir revisão (Proprietário)",
-          "request": {
-            "method": "DELETE",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:5080/api/revisoes/18",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "5080",
-              "path": [
-                "api",
-                "revisoes",
-                "18"
-              ]
-            },
-            "description": "Este endpoint realiza a exclusão de uma revisão proprietário\n\nRetorno esperado para uma requisição válida:\n\n- Retornar status code 204(No Content)\n    \n- Excluir a revisão do sistema\n    \n- Não retornar nada, somente excluir a revisão específica"
-          },
-          "response": []
-        },
-        {
-          "name": "Sair revisão (!Proprietário)",
-          "request": {
-            "method": "DELETE",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:5080/api/revisoes/30/membros/me",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "5080",
-              "path": [
-                "api",
-                "revisoes",
-                "30",
-                "membros",
-                "me"
-              ]
-            },
-            "description": "Este endpoint realiza a saída de uma revisão onde o papel do usuário é diferente de proprietário\n\nResultado esperado para a requisição válida:\n\n- Retonar um status code 204 (No Content)\n    \n- Usuário espcífico sair da revisão\n    \n- Revisão permanecer normal"
-          },
-          "response": []
+            {
+              "name": "Excluir revisão (Proprietário)",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/revisoes/81",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "revisoes",
+                    "81"
+                  ]
+                },
+                "description": "Este endpoint realiza a exclusão de uma revisão proprietário\n\nRetorno esperado para uma requisição válida:\n\n- Retornar status code 204(No Content)\n    \n- Excluir a revisão do sistema\n    \n- Não retornar nada, somente excluir a revisão específica"
+              },
+              "response": []
+            }
+          ]
         }
       ]
     },
@@ -968,6 +946,17 @@
                 "description": "Este endpoint realiza a exclusão de um membro em uma revisão no papel PROPRIETÁRIO\n\nResultado esperado para uma requisição válida:"
               },
               "response": []
+            },
+            {
+              "name": "resumo de dados",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": ""
+                }
+              },
+              "response": []
             }
           ]
         },
@@ -1046,6 +1035,30 @@
                     "description": "Este endpoint realiza a importação de arquivo com os papeis AVALIADOR e COLABORADOR\n\nResultado esperado para uma requisição válida:\n\n- Retornar um status code 401(Unauthorized)\n    \n- Não importar o arquivo no sistema\n    \n- Retornar a mensagem sobre a validação"
                   },
                   "response": []
+                },
+                {
+                  "name": "importar arquivo base de dados",
+                  "request": {
+                    "method": "POST",
+                    "header": [],
+                    "url": {
+                      "raw": "http://localhost:5080/api/revisoes/81/importacoes/biblioteca/8",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "5080",
+                      "path": [
+                        "api",
+                        "revisoes",
+                        "81",
+                        "importacoes",
+                        "biblioteca",
+                        "8"
+                      ]
+                    }
+                  },
+                  "response": []
                 }
               ]
             },
@@ -1072,6 +1085,38 @@
                       "raw": ""
                     },
                     "description": "Este endpoint realiza a chamada dos artigos duplicados como membro proprietário\n\nResultado esperado para uma requisição válida:\n\n- Retornar status code"
+                  },
+                  "response": []
+                },
+                {
+                  "name": "New Request",
+                  "request": {
+                    "method": "POST",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n  \"artigoAId\": 1782,\r\n  \"artigoBId\": 1794,\r\n  \"decisao\": 0\r\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "http://localhost:5080/api/revisoes/48/duplicidades/decisoes",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "5080",
+                      "path": [
+                        "api",
+                        "revisoes",
+                        "48",
+                        "duplicidades",
+                        "decisoes"
+                      ]
+                    }
                   },
                   "response": []
                 }
@@ -1110,10 +1155,506 @@
                     "description": "Este endpoint realiza uma requisição de inicio de votação com o papel PROPRIETÁRIO\n\nResultado esperado da requisição válida:\n\n- Retornar status code 201(Created)\n    \n- Criar uma votação na revisão\n    \n- Retornar o corpo da revisão"
                   },
                   "response": []
+                },
+                {
+                  "name": "iniciar votacao (!proprietario)",
+                  "request": {
+                    "method": "POST",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n    \"revisaoid\": 35\r\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "http://localhost:5080/api/votacoes/iniciar",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "5080",
+                      "path": [
+                        "api",
+                        "votacoes",
+                        "iniciar"
+                      ]
+                    },
+                    "description": "Este endpoint realiza uma requisição de inicio de votação com o papel diferente de proprietário\n\nResultado esperado da requisição válida:\n\n- Retornar status code 400(Bad Request)\n    \n- Não criar uma votação na revisão\n    \n- Retornar uma mensagem de validação"
+                  },
+                  "response": []
+                },
+                {
+                  "name": "votar",
+                  "request": {
+                    "method": "POST",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n  \"artigoId\": 1544,\r\n  \"usuarioId\": 2,\r\n  \"opcao\": \"Excluir\"\r\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "http://localhost:5080/api/votacoes/14/votos",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "5080",
+                      "path": [
+                        "api",
+                        "votacoes",
+                        "14",
+                        "votos"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "progresso",
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": ""
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "conflito",
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "http://localhost:5080/api/votacoes/14/conflitos",
+                      "protocol": "http",
+                      "host": [
+                        "localhost"
+                      ],
+                      "port": "5080",
+                      "path": [
+                        "api",
+                        "votacoes",
+                        "14",
+                        "conflitos"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "conflito artigos",
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": ""
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "votar conflitos",
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": ""
+                    }
+                  },
+                  "response": []
                 }
               ]
+            },
+            {
+              "name": "listar artigos",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "api/revisoes/{revisaoId}/artigos",
+                  "host": [
+                    "api"
+                  ],
+                  "path": [
+                    "revisoes",
+                    "{revisaoId}",
+                    "artigos"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "atualizar criterio",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": ""
+                }
+              },
+              "response": []
             }
           ]
+        },
+        {
+          "name": "Planilhas",
+          "item": [
+            {
+              "name": "adicionar artigos",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"artigosIds\": [7108]\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:5080/api/revisoes/57/planilha/artigos",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "5080",
+                  "path": [
+                    "api",
+                    "revisoes",
+                    "57",
+                    "planilha",
+                    "artigos"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "listar planilhas",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:5080/api/auth/registro",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "5080",
+                  "path": [
+                    "api",
+                    "auth",
+                    "registro"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "editar celula",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": ""
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "deletar linha",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": ""
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "editar coluna",
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n  \"nome\": \"Fonte da pesquisa\"\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:5080/api/revisoes/57/planilha/colunas/11",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "5080",
+                  "path": [
+                    "api",
+                    "revisoes",
+                    "57",
+                    "planilha",
+                    "colunas",
+                    "11"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "prisma",
+          "item": [
+            {
+              "name": "listar prisma",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://localhost:5080/api/revisoes/83/prisma",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "5080",
+                  "path": [
+                    "api",
+                    "revisoes",
+                    "83",
+                    "prisma"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "biblioteca",
+      "item": [
+        {
+          "name": "cadastrar base de dados",
+          "item": [
+            {
+              "name": "Dados Validos",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "titulo",
+                      "value": "Artigos sobre diabetes na velhice",
+                      "type": "text"
+                    },
+                    {
+                      "key": "descricao",
+                      "value": "Base de estudos para reutilização em revisões relacionadas a diabetes em idosos.",
+                      "type": "text"
+                    },
+                    {
+                      "key": "arquivos",
+                      "type": "file",
+                      "src": [
+                        "/C:/Users/luizg/Downloads/arquivo1.nbib"
+                      ]
+                    },
+                    {
+                      "key": "arquivos",
+                      "type": "file",
+                      "src": [
+                        "/C:/Users/luizg/Downloads/export (1).ris"
+                      ]
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "http://localhost:5080/api/biblioteca",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "5080",
+                  "path": [
+                    "api",
+                    "biblioteca"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "listar bases",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5080/api/biblioteca",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5080",
+              "path": [
+                "api",
+                "biblioteca"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "atualizar base",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"titulo\": \"Artigos sobre diabetes na terceira idade\",\r\n  \"descricao\": \"Base atualizada para estudos reutilizáveis.\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:5080/api/biblioteca/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5080",
+              "path": [
+                "api",
+                "biblioteca",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "remover base",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5080/api/biblioteca/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5080",
+              "path": [
+                "api",
+                "biblioteca",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "adicionar importacao",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "arquivos",
+                  "type": "file",
+                  "src": [
+                    "/C:/Users/luizg/Downloads/teste duplicada - 1.ris"
+                  ]
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:5080/api/biblioteca/2/importacoes",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5080",
+              "path": [
+                "api",
+                "biblioteca",
+                "2",
+                "importacoes"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "remover importacao",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5080/api/biblioteca/2/importacoes/5",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5080",
+              "path": [
+                "api",
+                "biblioteca",
+                "2",
+                "importacoes",
+                "5"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "listar importacoes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:5080/api/biblioteca/3/importacoes",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "5080",
+              "path": [
+                "api",
+                "biblioteca",
+                "3",
+                "importacoes"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     }
