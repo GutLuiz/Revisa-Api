@@ -23,6 +23,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Docs\Quality\Features\Prisma\" />
+    <Folder Include="Docs\Quality\Features\Planilha\" />
     <Folder Include="Tests\Postman\" />
   </ItemGroup>
 

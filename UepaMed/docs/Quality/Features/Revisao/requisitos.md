@@ -38,6 +38,9 @@
 02 - Excluir artigos importados
 	= Usuários com papel Proprietário ou Revisor devem poder excluir arquivos de artigos incluídos na revisão
 
+03 - Critérios da votação
+	= Usuários com papel proprietário devem poder adicionar critérios da votação
+
 03 - Resolver artigos duplicados
 	= Somente o Proprietário deve poder resolver artigos duplicados identificados pelo sistema.
 	= Artigos duplicados devem voltar para a lista de artigos como excluído
