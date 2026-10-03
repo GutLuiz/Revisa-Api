@@ -30,7 +30,7 @@ namespace UepaMed.Application.Services
                 issuer: _config["Jwt:Issuer"],
                 audience: _config["Jwt:Audience"],
                 claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(50),
+                expires: DateTime.UtcNow.AddMinutes(60),
                 signingCredentials: creds
             );
 

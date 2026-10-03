@@ -131,7 +131,7 @@ namespace UepaMed.Controllers
                     HttpOnly = true,
                     Secure = true,
                     SameSite = SameSiteMode.None,
-                    Expires = DateTimeOffset.UtcNow.AddMinutes(15),
+                    Expires = DateTimeOffset.UtcNow.AddMinutes(60),
                     Path = "/"
                 }
             );
